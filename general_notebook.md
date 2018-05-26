@@ -86,10 +86,14 @@ rule NAME:
 
 # Git 
 
-When we `git add` a file, it means we are tracking it and git knows about its existence and will be included in the next commit  
+- When we `git add` a file, it means we are tracking it and git knows about its existence and will be included in the next commit  
 But changes to it will not be automatically staged for the next commit.    
 
-To do so, we will have to either `git add` again or when we commit, `git commit -a -m "title"` to automatically stage and commit all changes.  
+- To do so, we will have to either `git add` again or when we commit, `git commit -a -m "title"` to automatically stage and commit all changes.  
+
+- `git log` seems super useful for tracking past commits and probably retrieving them
+
+- `git mv` and `git rm` are used so git can keep track of renaming /deletion   
 
 
 # Python
