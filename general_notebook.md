@@ -95,6 +95,13 @@ But changes to it will not be automatically staged for the next commit.
 
 - `git mv` and `git rm` are used so git can keep track of renaming /deletion   
 
+- `.gitignore` file should be set up in each main repo to specify which files shouldnt be tracked/ staged.  
+
+- `git reset file` to unstage a modified file which was staged/ added  
+
+- `git remote add origin git@github.com:jinweelee/repo` -> linking local repo to remote repo  
+
+- `git remote -v`, note how `origin` is the convention for the main repo 
 
 # Python
 

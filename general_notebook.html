@@ -68,9 +68,17 @@ rule bcftools_call:
             with open(output[0], &quot;w&quot;) as out:
                 out.write(...)</code></pre>
 <h1 id="git">Git</h1>
-<p>When we <code>git add</code> a file, it means we are tracking it and git knows about its existence and will be included in the next commit<br />
-But changes to it will not be automatically staged for the next commit.</p>
-<p>To do so, we will have to either <code>git add</code> again or when we commit, <code>git commit -a -m &quot;title&quot;</code> to automatically stage and commit all changes.</p>
+<ul>
+<li><p>When we <code>git add</code> a file, it means we are tracking it and git knows about its existence and will be included in the next commit<br />
+But changes to it will not be automatically staged for the next commit.</p></li>
+<li><p>To do so, we will have to either <code>git add</code> again or when we commit, <code>git commit -a -m &quot;title&quot;</code> to automatically stage and commit all changes.</p></li>
+<li><p><code>git log</code> seems super useful for tracking past commits and probably retrieving them</p></li>
+<li><p><code>git mv</code> and <code>git rm</code> are used so git can keep track of renaming /deletion</p></li>
+<li><p><code>.gitignore</code> file should be set up in each main repo to specify which files shouldnt be tracked/ staged.</p></li>
+<li><p><code>git reset file</code> to unstage a modified file which was staged/ added</p></li>
+<li><p><code>git remote add origin git@github.com:jinweelee/repo</code> -&gt; linking local repo to remote repo</p></li>
+<li><p><code>git remote -v</code>, note how <code>origin</code> is the convention for the main repo</p></li>
+</ul>
 <h1 id="python">Python</h1>
 <ul>
 <li><code>int()</code> and <code>str()</code></li>
