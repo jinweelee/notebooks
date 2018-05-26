@@ -1,0 +1,78 @@
+<p>|<General Notebook></p>
+<h1 id="pandoc-markdown">Pandoc/ markdown</h1>
+<ul>
+<li>2 spaces indicate a line break<br />
+</li>
+<li>Asterisk for bullet point with indentation<br />
+</li>
+<li>For code lines and blocks use apostrophe</li>
+</ul>
+<pre><code>def fn(){
+
+}</code></pre>
+<p>Inserting a link <a href="http://google.com" class="uri">http://google.com</a></p>
+<h1 id="ubuntu-unix-changelog">Ubuntu/ Unix Changelog</h1>
+<p>Reconfigured sources.list and .bashrc</p>
+<p>Installed Packages in loqs:</p>
+<ol style="list-style-type: decimal">
+<li>Pandoc<br />
+</li>
+<li>Miniconda<br />
+</li>
+<li>Snakemake</li>
+</ol>
+<h1 id="ubuntu-unix-help">Ubuntu/ Unix Help</h1>
+<ul>
+<li>To view installed packages: <code>dpkg -l</code> or <code>conda list</code></li>
+</ul>
+<h1 id="snakemake">Snakemake</h1>
+<h2 id="wildcards">Wildcards</h2>
+<ul>
+<li>If we need to use the file prefix in our shell command <code>{wildcards.sample}</code> that is not in the already defined output.</li>
+</ul>
+<pre><code>rule samtools_sort:
+    input:
+        &quot;mapped_reads/{sample}.bam&quot;
+    output:
+        &quot;sorted_reads/{sample}.bam&quot;
+    shell:
+        &quot;samtools sort -T sorted_reads/{wildcards.sample} &quot;
+        &quot;-O bam {input} &gt; {output}&quot;
+</code></pre>
+<h2 id="targets">Targets</h2>
+<pre><code>SAMPLES = [&quot;A&quot;, &quot;B&quot;]
+
+rule bcftools_call:
+    input:
+        fa=&quot;data/genome.fa&quot;,
+        bam=expand(&quot;sorted_reads/{sample}.bam&quot;, sample=SAMPLES),
+        bai=expand(&quot;sorted_reads/{sample}.bam.bai&quot;, sample=SAMPLES)
+    output:
+        &quot;calls/all.vcf&quot;
+    shell:
+        &quot;samtools mpileup -g -f {input.fa} {input.bam} | &quot;
+        &quot;bcftools call -mv - &gt; {output}&quot;
+</code></pre>
+<p>bam can be interpreted as [&quot;sorted_reads/A.bam&quot;, &quot;sorted_reads/B.bam&quot;]</p>
+<h2 id="external-scripts">External Scripts</h2>
+<p>External script path is always relative to the Snakefile</p>
+<h2 id="misc">Misc</h2>
+<ul>
+<li>Try this way of using <code>input</code> as a variable to iterate through</li>
+</ul>
+<pre><code>rule NAME:
+    input: &quot;path/to/inputfile&quot;, &quot;path/to/other/inputfile&quot;
+    output: &quot;path/to/outputfile&quot;, somename = &quot;path/to/another/outputfile&quot;
+    run:
+        for f in input:
+            ...
+            with open(output[0], &quot;w&quot;) as out:
+                out.write(...)</code></pre>
+<h1 id="git">Git</h1>
+<p>When we <code>git add</code> a file, it means we are tracking it and git knows about its existence and will be included in the next commit<br />
+But changes to it will not be automatically staged for the next commit.</p>
+<h1 id="python">Python</h1>
+<ul>
+<li><code>int()</code> and <code>str()</code></li>
+</ul>
+<h1 id="r">R</h1>
