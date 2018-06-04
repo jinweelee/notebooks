@@ -141,7 +141,13 @@ Installed Packages in loqs:
 
 Updated Packages in loqs:
 
-1. date-util 
+1. date-util
+
+
+Packages installed on atlas:
+
+1. gffutils  
+   
 
 
 
