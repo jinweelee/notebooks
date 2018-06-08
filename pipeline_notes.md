@@ -84,6 +84,35 @@ So i think we will:
 3) Then use db.childern(type=exon) to get all the exons for each parentID, append them to a txt file. 
 
 
+for hpRNA we just `grep "Name=hpRNA" gene.gff`, then settle the isoform related stuff downstream. 
+
+
+K i am also going to omit the PTID file, i think its unecessary. So we will only extract the information pertaining to `Parent=FBgn0031208` and then subsequently drop duplicates. 
+
+Also note, *`transposable_element` have no exons*, so we just merge them later. 
+
+wow actually the `exon.gff` file is pretty useless. 
+Note, when printing we also add the parent type to the end 
+
+Okay, we are also going to try and stop hard coding the lib-vers in there 
+
+
+##GFF2bed
+
+Seems that after this, geneID is set at column "4"
+ 
+```
+2L      901490  901654  eID=FBgn0003916 .       -       FlyBase exon    .       Parent=FBtr0078028;geneID=FBgn0003916;parenttype=snRNA
+```
+
+I suspect this is a property of me adding the geneID information to that field at the end. 
+
+ok, it seems that we have an issue with the gene.bed file that makes it unable for us to use gff2bed. I think we scrap it. 
+
+##bedtools
+
+K seems like we have to remove the additional fields from the `gff2bed` output and format it abit, because apparently `bedtools merge -s` cant work properly when theres more than 6 fields present. 
+
 ##Gffutils
 K several things with the GFF file. I think if we use GFFutils we dont need a cleanup
 

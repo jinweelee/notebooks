@@ -55,6 +55,32 @@ both `testing grounds` and `layout` effectively moved server side.
 
 decided to go back to my old method of doing cis nat, seems legit.  
 
-When we get back to work on sunday, start with gffutils 
+When we get back to work on sunday, start with gffutils
+
+
+
+##040618
+Note, we have to `git push origin master` after committing and we gotta add files to be tracked before commiting. 
+
+
+for "Name=hpRNA", note that while `gene` and `ncRNA` features span the same region, `ncRNA` features have repeats because they represent the various hpRNA-isoforms.  
+
+For example, CR33940 has 3 isoforms, D,E and F. 
+
+
+ 
+##080618
+
+Ok we seem to having some issues with `bedtools merge -s`, i suspect its a result of having more than 6 fields, look into this. 
+
+Yes thats the issue, so, after gff2bed we have to:
+1) Remove additional fields 
+2) Add parenttype information to "$4" 
+
+
+Also, after gff2bed, `eID` represents exon
+
+
+Note, we have to refine bedtools -intersect parameters for more information.
 
   

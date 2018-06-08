@@ -118,6 +118,8 @@ External script path is always relative to the Snakefile
 
 * We now store all "runlist" type information, in `default_config.yaml` file. It also appears that by convention we have to read in our file with the variable `configfile` and later on its named as `config`.
 
+* `snakemake -s test.Snakefile --verbose -p`
+
 # Bioinfo/Tech packages
 
 1. Markdown notepad
@@ -175,7 +177,8 @@ Packages installed on atlas:
 ### os.path
 
 * `os.path.isdir(path)`: Returns boolean of whether directory specified by path exists.   
-* `os.path.join(path, *paths)`: Returns the concatenation of 2 paths, both are strings.   
+* `os.path.join(path, *paths)`: Returns the concatenation of 2 paths, both are strings. Ah and also note, every comma essentially == `/`    
+* Also, if we use the comma, we dont need `/` at the end of each directory. 
 
 ## str
 
@@ -192,6 +195,11 @@ Packages installed on atlas:
 * To get **in the order they were added,** essentialy their position in the dictionary, convert to list.`list(dict.keys())` / `list(dict.values())`
 * `dict[key]`
 * 
+
+## Misc
+Consider using both for more advanced printing in the future  
+`print(feature, "parenttype=" + ft,sep=";")`  
+`"{} {}".format(feature, "p")`
 
 
 
@@ -235,10 +243,24 @@ columns (column labels) , index (row labels)
 * `df.drop(df.index[], axis = 1)`: For dropping entire rows/columns Optionally axis=1 ensures that we refer to a column and not row.  
 
 
+* For the code snippet below, seems like indexing -> splitting a column returns a `Dataframe` of all the split data. Ah so it seems that **if we index columns, we get a `series` but after we `split` it we get a dataframe**. Also note, we can just split a series directly without prior indexing `(geneID_field.str.split(';',expand=True))`
+
+def f(gff):
+
+	gffdata = pd.read_csv(gff,sep='\t', header=None, index_col=None)
+	split = (gffdata[8].str.split(';',expand=True))
+	print(split)
+	print(type(split))
+
+
+* Whenever we `df[:6] index` , pandas sees it as row manipulation
+* `bed.drop([6,7,8,9], axis =1, inplace = True)`, seems like we have no choice but to manually key in the columns.
+* `bed[3] = bed[3].astype(str) + ";parenttype=mRNA"`, note for adding a string to every value in column. 
+
 
 ### Data entry manipulation 
 
-* `df.loc[file[0] == 'goodbye']`: Removes rows where entry in target column is not 'goodbye'
+* `df.loc[df[0] == 'goodbye']`: Removes rows where entry in target column is not 'goodbye'
 * `df.drop_duplicates(0 /[0,1], keep = '' )`: Removes rows with duplicate entries in target column(s).
 
 
