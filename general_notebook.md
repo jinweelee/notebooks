@@ -172,7 +172,9 @@ Packages installed on atlas:
 
 * `os.listdir(path)`: Returns list of strings of all files in directory specified by path    
 * `os.mkdir(path)` : Creates directory basd on path  
-* `os.getcwd()`: Returns current working directory   
+* `os.getcwd()`: Returns current working directory
+* `os.chdir('')` this is gonna be super sweet to guide the path for every snakefile. Even better, it does not screw up the pathing for `config` file.  
+* `os.listdir( path )` to list every file in path 
  
 ### os.path
 
@@ -261,22 +263,28 @@ def f(gff):
 ### Data entry manipulation 
 
 * `df.loc[df[0] == 'goodbye']`: Removes rows where entry in target column is not 'goodbye'
+* `df.loc[df[10].str.contains('LINE')]` checks for contains. seems like `Series.str.` can be quite helpful
 * `df.drop_duplicates(0 /[0,1], keep = '' )`: Removes rows with duplicate entries in target column(s).
+* `out = df[[4,5,6,10,7,8]]` **note, the resultant df keeps old header labels** 
 
 
 ### Other functionalities
 
-* `df.sort_index(axis)` sorts the dataframe based on the **values** of specified axis, `df.sort_values()` sorts by actual table values of column   
+* `df.sort_index(axis)` sorts the dataframe based on the **values** of specified axis, `df.sort_values()` sorts by actual table values of column  
+* cool stuff, did abit of iterrows today, found out you can index the row object.  
+
+			for index,row in tab_data.iterrows():
+				data = row[:2]
+				for line in data:
+					print(line)
 
 
 ## pd.read_csv()
 
-Sample input: `pd.read_csv(`hello there   i   am`, sep='\t', header=None, index_col=None)`
-        
-Sample output:
-````
-       0      1  2   3
-0  hello  there  i  am
-````
+* `f = pd.read_csv(test , sep = '\s+', header = None, skiprows = 2)`
+
+The regex is to deal with multiple variable whitespace delimiter and `skiprows` essentially just skips to row 2. 
+
+
 
 # R  

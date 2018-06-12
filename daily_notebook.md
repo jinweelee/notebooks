@@ -83,4 +83,24 @@ Also, after gff2bed, `eID` represents exon
 
 Note, we have to refine bedtools -intersect parameters for more information.
 
+
+##110618
+
+well learnt how to deal with multiple whitespace delimited bullshit in pandas. 
+
+
+`os.chdir()` is life changing 
+
+
+##120618
+
+Think we should allow the use of flags to link up seemingly separate rules. 
+
+Note, we incorporated the flags already but will only observe them when we re-run the entire thing.
+
+ok, 05_CR14033.bed is buggy, i cant seem to `get fasta` it. Double check coordinates, seems ok, very strange. 
+
+so i think we'll just add the CR14033 fasta to downloads 
+
+Also we've found out that if you remove one file from the output, the entire rule runs to reproduce everything else as well.  
   

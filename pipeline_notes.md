@@ -113,6 +113,12 @@ ok, it seems that we have an issue with the gene.bed file that makes it unable f
 
 K seems like we have to remove the additional fields from the `gff2bed` output and format it abit, because apparently `bedtools merge -s` cant work properly when theres more than 6 fields present. 
 
+For some really weird reason, `bedtools intersect -S` gives a different output but same number of features with and without `wa & wb` 
+
+Ahhhhhh i see, its because bedtools intersect only reports the feature in -a file, it does not actually merge the details. this is confirmed ? There should be a 1 -> 1 correspondence 
+
+*AHHH THE KEY IS -wb** 
+
 ##Gffutils
 K several things with the GFF file. I think if we use GFFutils we dont need a cleanup
 
@@ -121,10 +127,18 @@ Returns an iterator of gffutils.Feature objects.
 Could be useful. 
 
 
+##Repeatmasker
+
+ok... its not tab delimited and to prevent tearing hair out delete all " *" 
 
 
+##Citation Indexes
+*`04_Czech` features taken from Supp info, S2 cells.
+* `05_CR14033` discontinued as citation index, now directly downloaded as fasta from flybase 
 
-# External Libs 
+#Mapping 
+
+## External Libs 
 
 Ok, so i think we are gonna split: 
 
