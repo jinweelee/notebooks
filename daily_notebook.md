@@ -103,4 +103,11 @@ ok, 05_CR14033.bed is buggy, i cant seem to `get fasta` it. Double check coordin
 so i think we'll just add the CR14033 fasta to downloads 
 
 Also we've found out that if you remove one file from the output, the entire rule runs to reproduce everything else as well.  
-  
+ 
+
+
+##130618
+
+Things we have yet to settle,
+
+got to get the index list sorted out. 

@@ -133,19 +133,58 @@ ok... its not tab delimited and to prevent tearing hair out delete all " *"
 
 
 ##Citation Indexes
-*`04_Czech` features taken from Supp info, S2 cells.
+* `04_Czech` features taken from Supp info, S2 cells.
+
 * `05_CR14033` discontinued as citation index, now directly downloaded as fasta from flybase 
+
+##mirBASE
+
+* Ok i think its the right call to use mature *miRNA* features. 
 
 #Mapping 
 
+##Mapping algorithmn
+
+Ok, so both our external libraries and OKamura libraries are going to use 1 central `sequential_mapping` snakefile, with the necessary specification of **2 additional parameters** at the command line. 
+
+* `lib_type` = `okamura` or `external`
+* `dataset` = `GSE...`
+
+**Note, second config parameter only necessary if `lib_type == external`
+
+the purpose of this custom configS will be to:
+1) which external dataset we map from
+
+2) specify whether we map to spikein or not, using a conditional wrapped around sequential mapping rules 
+
+
+Maybe we will apply this variable passing thing when we do RPM / SPIKein normalzation later.
+
+
+Additionally for our output file
 ## External Libs 
 
 Ok, so i think we are gonna split: 
 
-no theres not much point, we should just run custom scripts, and we make sure all converge at "Lib_final_col_filter.fasta"
+no theres not much point, we should just run custom scripts, and we make sure all converge at "Lib_final_col_filter.fasta".
+
+And `External_libraries` folder will have the same architecture with 3 internal folders,
+`final_preprocessed`, `original_libs`, `temp_libs`
+
+Additionally, within each of these 3 folders theres going to be an additional folder for each dataset, i.e
+`final_preprocessed/GSE17171/` -> containing all the final preprocessed GSMs/libs of that dataset. 
+
+
+Same for output `Mapping_output/External_libs/Mapped_fasta/GSE17171`
+
+
+We are going to have to set up an additional library parameter ot handle each dataset and its libaries. 
 
 
 ## GSE26230 
+Perl scripts were used to sort according to barcodes, remove the 3'-linker sequences and select for 19-25 nt long inserts (available upon request). Bowtie was used for mapping against the target sequences specified in the manuscript.
+
+Ok so in addition theres also this hairpin/transposon mapped file. 
 
 1. Extract .tar file 
 2. Extract *.txt.gz files, store everything else as misc
@@ -158,4 +197,24 @@ no theres not much point, we should just run custom scripts, and we make sure al
 
 ## GSE17171
 
-Seems like the libraries are in .csv format and to be confirmed with renyi what he did with the mappers/ non mappers, whether he used both or not  
+K seems like this is already mapped and normalized. 
+
+Renyi then took these sequences and re-mapped them. 
+
+The 36-nt long Illumina reads were stripped of the 3’ linker, collapsed, and the resulting small RNA sequences were mapped to the Release 5 genome excluding the Uextra portion.For annotation, we used Flybase for protein coding genes, UCSC for non-coding RNAs and transposons/repeats (repeat masker tracks) and the most recent miRNA catalog. For endo-siRNAs from structured loci we used custom annotations. To control for sequencing depth, small RNA counts were normalized to the same total number after subtracting those matching abundant cellular RNAs such as rRNAs and tRNAs. SEQ = the sequence of the small RNA. MAPNUM = the number of times the small RNA matches the respective genome sequence. TYPE = annotation category of the small RNA. READS = read count in respective library. All small RNAs were converted into DNA for sequencing, therefore U's are represented as T's.
+
+
+
+## GSE37443
+
+Supplementary files format and content: Sequences + number of reads. Barcode and adapter sequences are removed, and the same reads are pooled together.
+
+Seems like this is raw, adapter trimmed filtered reads. 
+
+
+
+## GSE11019
+Seems like this is raw, adapter trimmed filtered reads. 
+
+## GSE11086
+Also seems like raw reads 

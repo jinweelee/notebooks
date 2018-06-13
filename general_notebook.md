@@ -98,6 +98,25 @@ External script path is always relative to the Snakefile
 * Hmmnn, okay it seems that if we an intermediate `.done`, the pipeline will not rerun as long as the final `.done` is still there. 
 
 
+## --config variables
+
+`snakemake -s test.Snakefile --config variable='one'`
+
+`variable = config['variable']`
+
+`rule all:`
+	
+	input:
+		'one.done' if variable == 'one' else 'two.done'
+
+`rule first:` 
+
+	output:
+		touch('one.done' if variable == 'one' else 'two.done')
+	run:
+		pass 
+
+So it seems that we have to restate the config variable in the snakefile
 
 
 ##Misc 
