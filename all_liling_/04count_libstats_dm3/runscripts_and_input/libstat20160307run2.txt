@@ -1,0 +1,7 @@
+D005	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D006	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D007	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D008	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D009	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D010	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+D037	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3

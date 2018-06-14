@@ -1,0 +1,13 @@
+B133	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B134	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B135	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B136	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B137	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B138	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B139	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B140	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B141	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B142	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B143	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B144	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3
+B145	18	30	dme3excludeUextra	dm3excludeUext	0	a	normRPM	dm3

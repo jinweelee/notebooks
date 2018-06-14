@@ -1,0 +1,1035 @@
+# Time-stamp: <2013-08-16 12:41:18 liling>
+
+README for small rna intervals analysis scripts
+Requirements: gnu-awk, gnu-sed, gnu-join, gnu-sort, bedtools, bedops
+Ran on: Mac OS X version 10.7.5.
+Note: Used homebrew to install required tools. Used homebrew dupe GCC4.7
+to install bedops from source. Switched to using bedops sort-bed to do sorting.
+Note: Repeatmasker local run was performed with repeatmaskerlibraries-20130422 .
+
+
+###########
+Run scripts
+###########
+runforextralibs.sh  ## Time-stamp: <2013-08-06 19:00:10 liling>
+usage() {
+    echo "usage: runforextralibs.sh LIB 2>&1 | tee date.runforextralibs.txt"
+    echo " intervalfile name set within script." # big2catintervalDATE.bed
+    echo " selectlength set within script." # 21
+    echo " genomichits set within script." # 1
+    echo " Bed file associated variables set within script."
+    echo "where: <LIB> is a list of library names to process"
+    echo "This script runs smallrnaextralibs, mapwatsoncrickstrand,"
+    echo "selectreadlength, selectgenomichits"
+}
+LIB=$1 # this is the library number
+
+# Set variable   # Switch INTERVALFILE to map with different interval files.
+#INTERVALFILE=big2catreintervalllhits20130801.bed
+#INTERVALFILE=big2catreintervaluniquemapper20130801.bed
+INTERVALFILE=big2catreintervalmultimapper20130801.bed
+FEATURENORM=mirprecursor
+INDEX=dm3excludeUext
+COUNT=normReads
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+SELECTLENGTH=21
+GENOMICHITS=1
+
+###
+
+#runselectchrpastetables.sh ### Time-stamp: <2013-05-15 10:26:59 liling>  
+                            ## not needed since number of chr intervals do-able off excel spreadsheet
+usage() {
+    echo "usage: runselectchrpastetables.sh do 2>&1 | tee date.runselectchrpastetables.txt"
+    echo "       variables are set within script"
+    echo "       Script must be run with do"
+    echo "This script does the job of running select on tables generated"
+    echo "from pastetablehitsmersstrand"
+}
+NUMBER=3L
+LIB1=V0632
+LIB2=V0642
+LIB3=V0652
+LIB4=V0662
+LIB5=V097
+LIB6=V098
+LIB7=V0882
+LIB8=V0892
+INTERVALFILE=big2catintervalfile20130515.bed
+SELECTLENGTH=21
+GENOMICHITS=1
+IDBED=mapcoldm3excludeUextID.bed
+NORMBED=mapcoldm3excludeUextnorm.bed
+RPMID=mapcoldm3excludeUextRPMdeciID.bed
+NORMRPMID=mapcoldm3excludeUextnormRPMdeciID.bed
+COLCOVCOUNT=mapcolcov500countssubdm3chr.txt      # Has header row
+
+
+####################################################################################################################################
+
+##############################
+Format annotation file scripts  
+##############################
+
+formatmirBasegff2tobed.sh  ## Time-stamp: <2013-07-12 16:06:13 liling>
+usage() {
+    echo "usage: formatmirBasegff2tobed.sh MIRBASEANNOT"
+    echo "where: <MIRBASEANNOT> is a mirBase gff2 file"
+    echo "output: <MIRBASEANNOT>tobed.bed"
+    echo "This script does the job to reformat mirBase gff2 file to bed format."
+    echo "Note that gff2 coordinates are 1-based while "
+    echo "bed format coordinates are 0-based start, 1-based end."
+    echo "Also note gff2 format in mirbasev20."
+}
+# Set variable
+MIRBASEANNOT=$1   # Note that for hsa has chr in chr name while dme none.
+
+###
+
+#formatucsctablesannot.sh  ## Time-stamp: <2013-07-12 16:33:53 liling> ### no longer used. Replaced by repeatmasker local run.
+#usage() {
+#    echo "usage: formatucsctablesannot.sh DM3RMSK DM3TRF"
+#    echo "where: <DM3RMSK> is a dm3 repeat masker file from UCSC Table browser"
+#    echo "       <TRF> is a dm3 simple repeats file from UCSC Table browser"
+#    echo "output: <DM3RMSK><DM3TRF>combinedintervals.bed"
+#    echo "This script does the job of to format UCSC Table browser annotation"
+#    echo "bed files for use in subtractannotation.sh"
+#}
+#DM3RMSK=$1
+#DM3TRF=$2
+
+###
+
+##############################################################################################################
+Annotation for Flybase
+##############################################################################################################
+runflybaseannotations.sh ## Time-stamp: <2013-07-29 14:43:04 liling>
+usage() {
+    echo "usage: runflybaseannotations.sh do"
+    echo " Run script with do."
+    echo " Variables are set within script"
+    echo "This script does the job of running the scripts"
+    echo "for format FlyBase annotation,"
+    echo "selecting annotation, making bed files."
+}
+
+# README
+# STEP1: formatFlyBaseannotationgff.sh do
+# This script does the job of selecting annotations from FlyBase dmel all gff3 annotation file.
+# Find exon type region that overlaps for different parent types.
+
+        # Set variable
+        #FBDMELALLGFF=dmel-all-r5.52.gff
+        #FBDMELBASE=FBdmelr5.52
+        #FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+        #FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+        #FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+        #FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+        #FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+        #FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+        #FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+
+
+# STEP2: findFlyBasegeneannot.sh do
+# This script does the job of finding FlyBase gene annotations, the exons that overlap,
+# orientation of overlap. Note that need to manually check since several situations where
+# there are multiple exon overlaps for the same gene overlap, internal overlaps with differing
+# starting points. Annotated convergent or divergent transcription based on first exon direction.
+
+        # Set variable
+        #FBDMELALLGFF=dmel-all-r5.52.gff
+        #FBDMELBASE=FBdmelr5.52
+        #FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+        #FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+        #FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+        #FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+        #FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+        #FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+        #FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+        #OVERLAPCAT1=overlapcat.${FBDMELBASE}.txt.exon.mRNA.ncRNA.rRNA.tRNA.snRNA.snoRNA.pseudogene.txt
+        #OVERLAPTABLE=overlapcatexontype.geneintersect.nodupline.fbid.id.PTexonmerge.mergeunandstranded
+
+        # Output file
+        # start stop end exonPToverlap firstexondirection exondirection geneoverlap FbgnInfo \
+        # PTexonmergeinformation ExoncatmergeUnstranded ExoncatmergeStranded
+        # transcriptdirection.exonstrand.${OVERLAPTABLE}
+
+
+# STEP3: formatFlyBaseannotationtype.sh do
+# This script does the job of selecting annotation based on type. Note that these files are to be used
+# for annotating features, and not for running mapping counts since the type covers the entire gene region
+# regardless of exon, intron, or UTR.
+
+        # Set variables
+        #FBDMELBASE=FBdmelr5.52
+        #FBDMELBED=FBdmelr5.52.bed
+        #FBANNOT1=${FBDMELBED}.three_prime_UTR
+        #FBANNOT2=${FBDMELBED}.five_prime_UTR
+        #FBANNOT3=${FBDMELBED}.exon
+        #FBANNOT4=${FBDMELBED}.intron
+        #FBANNOT5=${FBDMELBED}.transposable_element
+        #FBANNOT6=${FBDMELBED}.ncRNA
+        #FBANNOT7=${FBDMELBED}.pseudogene
+        #FBANNOT8=${FBDMELBED}.pre_miRNA
+        #FBANNOT9=${FBDMELBED}.miRNA
+        #FBANNOT10=${FBDMELBED}.snoRNA
+        #FBANNOT11=${FBDMELBED}.snRNA
+        #FBANNOT12=${FBDMELBED}.tRNA
+        #FBANNOT13=${FBDMELBED}.rRNA
+        #FBANNOT14=overlap${FBANNOT1}.merge
+        #FBANNOT15=overlap${FBANNOT2}.merge
+
+
+# STEP4: formatFlyBaseannotationparenttype.sh do
+# This script does the job of selecting annotation for parent type and making bed files. Note that
+# these files are to be used for making bowtie indexes and for running mapping counts since that
+# the parent type is selected based on the exon, intron, UTR distinction.
+# Annotation for transposable elements are also selected.
+
+        # Set variables
+        #FBDMELBASE=FBdmelr5.52
+        #FBDMELBED=FBdmelr5.52.bed
+        #FBDMELBEDTYPE1=${FBDMELBED}.PT.exon
+        #FBDMELBEDTYPE2=${FBDMELBED}.PT.intron
+        #FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+        #FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+        #FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+
+# STEP5: formatFlyBasebedtofastatobowtieindex.sh do
+# This script does the job of extracting fasta sequences from bed files and making bowtie indexes.
+
+        # Set variables
+ 
+        #INPUTFASTA=dm3.chr.cat.fa # File cat from UCSC dm3 chr except Uextra
+        #INDEXBASE=dm3excludeUext
+        #FBDMELALLGFF=dmel-all-r5.52.gff
+        #FBDMELBASE=FBdmelr5.52
+        #FBDMELBED=FBdmelr5.52.bed
+        #FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+        #FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+        #FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+        #FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+        #FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+        #FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+        #FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+
+        #FBOVERLAPANNOT1=overlap${FBEXPT1}.${FBEXPT1} #note, used earlier simple bed name
+        #FBOVERLAPANNOT2=overlap${FBEXPT1}.${FBEXPT2}
+        #FBOVERLAPANNOT3=overlap${FBEXPT1}.${FBEXPT3}
+        #FBOVERLAPANNOT4=overlap${FBEXPT1}.${FBEXPT4}
+        #FBOVERLAPANNOT5=overlap${FBEXPT1}.${FBEXPT5}
+        #FBOVERLAPANNOT6=overlap${FBEXPT1}.${FBEXPT6}
+        #FBOVERLAPANNOT7=overlap${FBEXPT1}.${FBEXPT7}
+
+        #FBDMELBEDTYPE1=${FBDMELBED}.PT.exon ## this separates into mRNA, ncRNA, rRNA, pseudogene, tRNA, snoRNA, snRNA
+        #FBDMELBEDTYPE2=${FBDMELBED}.PT.intron ## this separates into mRNA, ncRNA, pseudogene, tRNA
+        #FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+        #FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+        #FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+        #FBANNOT1=${FBDMELBEDTYPE1}.mRNA.merge ## exon
+        #FBANNOT2=${FBDMELBEDTYPE1}.ncRNA.merge ## exon
+        #FBANNOT3=${FBDMELBEDTYPE1}.rRNA.merge ## exon
+        #FBANNOT4=${FBDMELBEDTYPE1}.pseudogene.merge ## exon
+        #FBANNOT5=${FBDMELBEDTYPE1}.tRNA.merge ## exon
+        #FBANNOT6=${FBDMELBEDTYPE1}.snoRNA.merge ## exon
+        #FBANNOT7=${FBDMELBEDTYPE1}.snRNA.merge ## exon
+
+        #FBANNOT8=${FBDMELBEDTYPE2}.mRNA.merge ## intron
+        #FBANNOT9=${FBDMELBEDTYPE2}.ncRNA.merge ## intron
+        #FBANNOT10=${FBDMELBEDTYPE2}.pseudogene.merge ## intron
+        #FBANNOT11=${FBDMELBEDTYPE2}.tRNA.merge ## intron
+
+        #FBANNOT12=${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+        #FBANNOT13=overlap${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+
+        #FBANNOT14=${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+        #FBANNOT15=overlap${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+
+        #FBANNOT16=${FBDMELBEDTYPE5}.transposableelement.merge
+
+
+###
+
+formatFlyBaseannotationgff.sh  ## Time-stamp: <2013-07-25 16:59:30 liling>
+usage() {
+    echo "usage: formatFlyBaseannotationgff.sh do"
+    echo " Run script with do."
+    echo " filenames set within script."
+    echo "This script does the job of selecting annotations from"
+    echo "FlyBase dmel all gff annotation file"
+    echo "and converting it from gff3 to bed format."
+}
+# Set variable
+FBDMELALLGFF=dmel-all-r5.52.gff
+FBDMELBASE=FBdmelr5.52
+
+FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+
+
+###
+
+findFlyBasegeneannot.sh  ## Time-stamp: <2013-07-25 17:01:23 liling>
+usage() {
+    echo "usage: findFlyBasegeneannot.sh do"
+    echo " Run script with do."
+    echo " variables set within script."
+    echo "This script does the job of finding FlyBase gene annotations."
+}
+# Set variable
+FBDMELALLGFF=dmel-all-r5.52.gff
+FBDMELBASE=FBdmelr5.52
+
+FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+OVERLAPCAT1=overlapcat.${FBDMELBASE}.txt.exon.mRNA.ncRNA.rRNA.tRNA.snRNA.snoRNA.pseudogene.txt
+OVERLAPTABLE=overlapcatexontype.geneintersect.nodupline.fbid.id.PTexonmerge.mergeunandstranded
+
+###
+
+formatFlyBaseannotationtype.sh  ## Time-stamp: <2013-07-27 15:40:14 liling>
+usage() {
+    echo "usage: formatFlyBaseannotationtype.sh do"
+    echo " Run script with do."
+    echo " filenames set within script."
+    echo "This script does the job of selecting annotation for"
+    echo "type."
+}
+# Set variables
+
+INPUTFASTA=dm3.chr.cat.fa # File cat from UCSC dm3 chr except Uextra
+FBDMELBASE=FBdmelr5.52
+FBDMELBED=FBdmelr5.52.bed
+
+FBANNOT1=${FBDMELBED}.three_prime_UTR
+FBANNOT2=${FBDMELBED}.five_prime_UTR
+FBANNOT3=${FBDMELBED}.exon
+FBANNOT4=${FBDMELBED}.intron
+FBANNOT5=${FBDMELBED}.transposable_element
+FBANNOT6=${FBDMELBED}.ncRNA
+FBANNOT7=${FBDMELBED}.pseudogene
+FBANNOT8=${FBDMELBED}.pre_miRNA
+FBANNOT9=${FBDMELBED}.miRNA
+FBANNOT10=${FBDMELBED}.snoRNA
+FBANNOT11=${FBDMELBED}.snRNA
+FBANNOT12=${FBDMELBED}.tRNA
+FBANNOT13=${FBDMELBED}.rRNA
+FBANNOT14=overlap${FBANNOT1}.merge
+FBANNOT15=overlap${FBANNOT2}.merge
+
+###
+
+formatFlyBaseannotationparenttype.sh  ## Time-stamp: <2013-07-29 14:49:36 liling>
+usage() {
+    echo "usage: formatFlyBaseannotationparenttype.sh do"
+    echo " Run script with do."
+    echo " filenames set within script."
+    echo "This script does the job of selecting annotation for"
+    echo "parenttype and making bed files."
+}
+# Set variables
+FBDMELBASE=FBdmelr5.52
+FBDMELBED=FBdmelr5.52.bed
+FBDMELBEDTYPE1=${FBDMELBED}.PT.exon ## this separates into mRNA, ncRNA, rRNA, pseudogene, tRNA, snoRNA, snRNA
+FBDMELBEDTYPE2=${FBDMELBED}.PT.intron ## this separates into mRNA, ncRNA, pseudogene, tRNA
+FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+
+##
+
+formatFlyBasebedtofastatobowtieindex.sh    ## Time-stamp: <2013-07-29 14:59:16 liling>
+usage() {
+    echo "usage: formatFlyBasebedtofastatobowtieindex.sh do"
+    echo " Run script with do."
+    echo " filenames set within script."
+    echo "This script does the job of selecting annotation from bed files,"
+    echo "extracting fasta from bed file"
+    echo "and making bowtie index"
+}
+# Set variables
+
+INPUTFASTA=dm3.chr.cat.fa # File cat from UCSC dm3 chr except Uextra
+INDEXBASE=dm3excludeUext
+FBDMELALLGFF=dmel-all-r5.52.gff
+FBDMELBASE=FBdmelr5.52
+FBDMELBED=FBdmelr5.52.bed
+
+FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge
+FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge
+FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge
+FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge
+FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge
+FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge
+FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge
+
+FBOVERLAPANNOT1=overlap${FBEXPT1}.${FBEXPT1} #note, used earlier simple bed name
+FBOVERLAPANNOT2=overlap${FBEXPT1}.${FBEXPT2}
+FBOVERLAPANNOT3=overlap${FBEXPT1}.${FBEXPT3}
+FBOVERLAPANNOT4=overlap${FBEXPT1}.${FBEXPT4}
+FBOVERLAPANNOT5=overlap${FBEXPT1}.${FBEXPT5}
+FBOVERLAPANNOT6=overlap${FBEXPT1}.${FBEXPT6}
+FBOVERLAPANNOT7=overlap${FBEXPT1}.${FBEXPT7}
+
+
+FBDMELBEDTYPE1=${FBDMELBED}.PT.exon ## this separates into mRNA, ncRNA, rRNA, pseudogene, tRNA, snoRNA, snRNA
+FBDMELBEDTYPE2=${FBDMELBED}.PT.intron ## this separates into mRNA, ncRNA, pseudogene, tRNA
+FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+FBANNOT1=${FBDMELBEDTYPE1}.mRNA.merge ## exon
+FBANNOT2=${FBDMELBEDTYPE1}.ncRNA.merge ## exon
+FBANNOT3=${FBDMELBEDTYPE1}.rRNA.merge ## exon
+FBANNOT4=${FBDMELBEDTYPE1}.pseudogene.merge ## exon
+FBANNOT5=${FBDMELBEDTYPE1}.tRNA.merge ## exon
+FBANNOT6=${FBDMELBEDTYPE1}.snoRNA.merge ## exon
+FBANNOT7=${FBDMELBEDTYPE1}.snRNA.merge ## exon
+
+FBANNOT8=${FBDMELBEDTYPE2}.mRNA.merge ## intron
+FBANNOT9=${FBDMELBEDTYPE2}.ncRNA.merge ## intron
+FBANNOT10=${FBDMELBEDTYPE2}.pseudogene.merge ## intron
+FBANNOT11=${FBDMELBEDTYPE2}.tRNA.merge ## intron
+
+FBANNOT12=${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+FBANNOT13=overlap${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+
+FBANNOT14=${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+FBANNOT15=overlap${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+
+FBANNOT16=${FBDMELBEDTYPE5}.transposableelement.merge
+
+
+###
+
+#formatbidirectionaloverlapfeature.sh      ## Time-stamp: <2013-07-23 11:30:56 liling> 
+                                           ### no longer used. Code written within mapfbannotateintervals.sh
+#usage() {
+#echo "usage: formatbidirectionaloverlapfeature.sh do"
+#echo "       Run script with do."
+#echo "       filenames set within script."
+#echo "This script does the job to format FBdmelr5.51"
+#echo "feature bed files into bidirectional overlap feature"
+#echo "bed files."
+#}
+
+############################################################################################################################
+
+##################################
+Making alignment intervals scripts
+##################################
+
+mergealignmentintervals.sh  ## Time-stamp: <2013-07-12 15:32:27 liling>
+usage() {
+    echo "usage: mergealignmentintervals.sh ORIGINALALIGNMENTFILE DISTANCE"
+    echo "where: <ORIGINALALIGNMENTFILE> is the original alignment bed file"
+    echo " <DISTANCE> is the merge interval distance"
+    echo "output: merge<DISTANCE><ORIGINALALIGNMENTFILE>"
+    echo "This script does the job of merging intervals within a set distance."
+}
+# Set variables
+ORIGINALALIGNMENTFILE=$1 # This is the big2cat file
+DISTANCE=$2
+
+
+###
+
+subtractannotation.sh  ## Time-stamp: <2013-07-12 15:27:11 liling>
+usage() {
+    echo "usage: subtractannotation.sh ALIGNMENTFILE ANNOTATIONFILE1 ANNOTATIONFILE2"
+    echo "where: <ALIGNMENTFILE> is a small RNA alignment bed file"
+    echo " <ANNOTATIONFILE1> is an annotation file"
+    echo " <ANNOTATIONFILE1> is a second annotation file to subtract"
+    echo "output: <ALIGNMENTFILE>sub<ANNOTATIONFILE1>"
+    echo " <ALIGNMENTFILE>sub<ANNOTATIONFILE1><ANNOTATIONFILE2>"
+    echo "This script does the job of subtracting annotation file"
+    echo "from small RNA alignment bed file."
+}
+# Set variables
+ALIGNMENTFILE=$1
+ANNOTATIONFILE1=$2
+ANNOTATIONFILE2=$3
+
+
+###
+
+formatintervalfile.sh   ## Time-stamp: <2013-07-12 15:27:52 liling>
+usage() {
+    echo "usage: formatintervalfile.sh SMALLRNAINTERVALS INTERVALFILE"
+    echo "where: <SMALLRNAINTERVALS> is the bigcat file after merge, subtract"
+    echo " <INTERVALFILE> is the name of the interval file to be made"
+    echo " in the form of (chr start stop interval 0 +)"
+    echo "output: <INTERVALFILE>"
+    echo "This script does the job of formating an interval file for use"
+    echo "in mapping counts."
+}
+# Set variables
+SMALLRNAINTERVALS=$1
+INTERVALFILE=$2
+
+
+####################################################################################################################################
+
+######################
+Mapping counts scripts
+######################
+
+normalizercounts.sh    ## Time-stamp: <2013-08-06 16:51:05 liling>
+usage() {
+echo "This script does the job of normalizing bed files according"
+echo "to the provided value."
+echo "The original mapcollapsefasta1 script would provide"
+echo "normRead according to genomic hits."
+}
+# Set variables
+######
+#INDEX=dmerdna
+#INDEX=chr1rdna
+####
+
+INDEX=dm3excludeUext
+COUNT=normReads
+
+#MAPTYPE=mapcoldmerdna.bed
+#MAPTYPE=mapcol${INDEX}.bed
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+
+FEATURENORM=mirprecursor
+LIB1=V063V0632re
+NORMVALUE1=21401300
+LIB2=V064V0642re
+NORMVALUE2=19908694
+LIB3=V065V0652re
+NORMVALUE3=26249232
+LIB4=V066V0662re
+NORMVALUE4=19278630
+LIB5=V097re
+NORMVALUE5=11945557
+LIB6=V098re
+NORMVALUE6=13417276
+LIB7=V0882re
+NORMVALUE7=11117557
+LIB8=V0892re
+NORMVALUE8=9192178
+LIB9=big2catre
+NORMVALUE9=86837856
+
+
+###
+
+mapfbannotateintervals.sh   ## Time-stamp: <2013-08-07 13:49:23 liling>
+usage() {
+    echo "usage: mapfbannotateintervals.sh do"
+    echo " Variables are set within script."
+    echo " Run script with do."
+    echo "output: <FBANNOT>.<INTERVALFILE>.txt"
+    echo "This script does the job of mapping FlyBase Database annotation"
+    echo "to interval file."
+}
+# Set variables
+#INTERVALFILE=big2catreintervalllhits20130801.bed
+#INTERVALFILE=big2catreintervaluniquemapper20130801.bed
+INTERVALFILE=big2catreintervalmultimapper20130801.bed
+
+INDEXBASE=dm3excludeUext
+FBDMELALLGFF=dmel-all-r5.52.gff
+FBDMELBASE=FBdmelr5.52
+FBDMELBED=FBdmelr5.52.bed
+
+# Annotation for exon, intron, UTR, transposable element, pre miRNA,
+FBANNOTNAME=${FBDMELBASE}.geneName.bed ## This is list of gene names, to map plus and minus strand.
+
+FBDMELBEDTYPE1=${FBDMELBED}.PT.exon ## this separates into mRNA, ncRNA, rRNA, pseudogene, tRNA, snoRNA, snRNA
+FBDMELBEDTYPE2=${FBDMELBED}.PT.intron ## this separates into mRNA, ncRNA, pseudogene, tRNA
+FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+FBANNOT1=${FBDMELBEDTYPE1}.mRNA.merge ## exon
+FBANNOT2=${FBDMELBEDTYPE1}.ncRNA.merge ## exon
+FBANNOT3=${FBDMELBEDTYPE1}.rRNA.merge ## exon
+FBANNOT4=${FBDMELBEDTYPE1}.pseudogene.merge ## exon
+FBANNOT5=${FBDMELBEDTYPE1}.tRNA.merge ## exon
+FBANNOT6=${FBDMELBEDTYPE1}.snoRNA.merge ## exon
+FBANNOT7=${FBDMELBEDTYPE1}.snRNA.merge ## exon
+
+FBANNOT8=${FBDMELBEDTYPE2}.mRNA.merge ## intron
+FBANNOT9=${FBDMELBEDTYPE2}.ncRNA.merge ## intron
+FBANNOT10=${FBDMELBEDTYPE2}.pseudogene.merge ## intron
+FBANNOT11=${FBDMELBEDTYPE2}.tRNA.merge ## intron
+
+FBANNOT12=${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+FBANNOT13=overlap${FBDMELBEDTYPE3}.mRNA.merge ##threeprimeUTR
+
+FBANNOT14=${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+FBANNOT15=overlap${FBDMELBEDTYPE4}.mRNA.merge ##fiveprimeUTR
+
+FBANNOT16=${FBDMELBEDTYPE5}.transposableelement.merge
+
+FBANNOT17=cat${FBDMELBEDTYPE1}.ncRNArRNApseudogenetRNAsnoRNAsnRNA.txt
+FBANNOT18=cat${FBDMELBEDTYPE2}.mRNAncRNApseudogenetRNA.txt
+
+MIRBASE=dmegff2tobedmirbasev20.bed ## stemloop mirprecursor
+
+
+###
+
+smallrnaextralibs.sh   ## Time-stamp: <2013-07-13 15:15:23 liling>
+usage() {
+    echo "usage: smallrnaextralibs.sh LIB INTERVALFILE"
+    echo "       Bed file associated variables set within script"
+    echo "where: <LIB> is the library name"
+    echo "       <INTERVALFILE> is the interval file"
+    echo "output: paste<LIB><MAPTYPE>RP<FEATURENORM>deciID.bedcovcount<INTERVALFILE>.txt" # This
+    echo "This script does the job of running counts"        # has
+    echo "for additional small RNA libraries."               # header
+}                                                            # row
+                                                         
+LIB=$1
+INTERVALFILE=$2
+FEATURENORM=mirprecursor
+INDEX=dm3excludeUext
+COUNT=normReads
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+
+
+###
+
+mapwatsoncrickstrand.sh   ## Time-stamp: <2013-07-12 16:29:34 liling>
+usage() {
+    echo "usage: mapwatsoncrickstrand.sh INTERVALFILE BEDFILE"
+    echo "where: <INTERVALFILE> is a file of intervals in the"
+    echo "       form of (chr start stop interval 0 +)."
+    echo "       <BEDFILE> is a file of 6-column bed file to process."
+    echo "output: watcri<BEDFILE><INTERVALFILE>"
+    echo "This script does the job of mapping a bed file to the"
+    echo "watson (plus) and crick (minus) chromosome strands."
+}
+INTERVALFILE=$1
+BEDFILE=$2           
+
+
+###
+
+runforreadlengthhitselection.sh  ## Time-stamp: <2013-08-06 18:16:32 liling>
+usage() {
+    echo "usage: runforreadlengthhitselection.sh LIB"
+    echo " Bed file associated variables set within script."
+    echo " Variables for selection set within script."
+    echo "where: <LIB> is a name or list of library names to process."
+    echo "This script does the job of running the selection"
+    echo "for read length and genomic hits."
+}
+
+LIB=$1 # this is the library number
+
+# Set variable
+FEATURENORM=mirprecursor
+INDEX=dm3excludeUext
+COUNT=normReads
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+SELECTLENGTH=21
+GENOMICHITS=1
+
+
+###
+
+selectreadlength.sh    ## Time-stamp: <2013-06-05 16:12:11 liling>
+usage() {
+    echo "usage: selectreadlength.sh BEDFILE SELECTLENGTH"
+    echo "where: <BEDFILE> is a 6-column bed file"
+    echo "       <SELECTLENGTH> is the length to select"
+    echo "output: <SELECTLENGTH>mers<BEDFILE>"
+    echo "This script does the job of selecting mapped reads"
+    echo "of a particular length from bed file."
+}
+BEDFILE=$1
+SELECTLENGTH=$2
+
+
+###
+
+selectreadgenomichits.sh   ## Time-stamp: <2013-06-05 16:11:42 liling>
+usage() {
+    echo "usage: selectreadgenomichits.sh BEDFILE GENOMICHITS"
+    echo "where: <BEDFILE> is a 6-column bed file with 4th column"
+    echo "       identifier in the form of "
+    echo "       :LIB:SEQUENCE:READCOUNT:GENOMICHITS"
+    echo "       <GENOMICHITS> is the genomic hits count to select"
+    echo "output: <GENOMICHITS>hits<BEDFILE>"
+    echo "This script does the job of selecting mapped reads"
+    echo "of a particular genomic hits count from bed file."
+}
+BEDFILE=$1
+GENOMICHITS=$2
+
+
+###
+
+selectreadgenomichitsmultiple.sh   ## Time-stamp: <2013-08-06 18:07:48 liling>
+usage() {
+    echo "usage: selectreadgenomichitsmultiple.sh BEDFILE"
+    echo "where: <BEDFILE> is a 6-column bed file with 4th column"
+    echo " identifier in the form of "
+    echo " :LIB:SEQUENCE:READCOUNT:GENOMICHITS"
+    echo "output: mhits<BEDFILE>"
+    echo "This script does the job of selecting mapped reads"
+    echo "of a particular genomic hits count from bed file."
+}
+# Set variables
+BEDFILE=$1
+
+
+###
+
+genomichitscountsintervals.sh   ## Time-stamp: <2013-07-13 15:13:38 liling>
+usage() {
+    echo "usage: genomichitscountsintervals.sh INTERVALFILE LIB"
+    echo "       Bed file associated variables set within script"
+    echo "where: <INTERVALFILE> is an interval 6-column bed file"
+    echo "       <LIB> is a library name"
+    echo "output: <LIB><MAPTYPE>RP<FEATURENORM>deciID.bedmaxmedianhits<INTERVALFILE>"
+    echo "This script does the job of calculating max and median"
+    echo "genomic hits within interval."
+}
+INTERVALFILE=$1
+LIB=$2
+FEATURENORM=mirprecursor
+INDEX=dm3excludeUext
+COUNT=normReads
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+
+
+####################################################################################################################################
+
+################################
+Calculate and make table scripts
+################################
+
+#pastecalculateratio.sh   ## Time-stamp: <2013-05-17 17:32:13 liling> 
+#                          # Skip since not calculating ratio
+#usage() {
+#    echo "usage: pastecalculateratio.sh WTLIB1 LIB2 LIB3 LIB4"
+#    echo "where: <LIB1> is the first library as normalizer"
+#    echo "       <LIB2> is the second library"
+#    echo "       <LIB3> is the third library"
+#    echo "       <LIB4> is the fourth library"
+#    echo "output: paste<LIB1><LIB2><LIB3><LIB4>mapcolcov500countssubdm3chr.bed"
+#    echo "        #paste<LIB1><LIB2><LIB3><LIB4>mapcolcov500countssubdm3chrratiordeci.bed"
+#    echo "        #paste<LIB1><LIB2><LIB3><LIB4>mapcolcov500countssubdm3chrsum.bed"
+#    echo "This script does the job of combining library mapcolcovcounts" 
+#    echo "#and calculating a ratio based on <LIB1> for three other libraries."
+#}
+#LIB1=$1
+#LIB2=$2
+#LIB3=$3
+#LIB4=$4
+
+
+###
+
+
+#combinecountsgenomichits.sh  ## Time-stamp: <2013-05-10 10:27:29 liling>
+#                               # Skip this script since 
+#                               # only have
+#                               # <LIB>dm3chrmerged500subrepeatsGenomicHits.bed
+#                               # to paste
+#usage() {
+#    echo "usage: combinecountsgenomichits.sh LIB"
+#    echo "where: <LIB> is a library to process"
+#    echo "output: paste<LIB>mapcolcov500countsgenomicsubdm3chr.bed"
+#    echo "This script does the job of combining read counts"
+#    echo "and genomic hits max, median counts together."
+#}
+#LIB=$1   # bigcat
+
+
+###
+
+#selectmaketables.sh    ## Time-stamp: <2013-05-17 17:39:11 liling>
+#                        # Skip since using pastetablehitsmersstrand.sh
+#usage() {
+#    echo "usage: selectmaketables.sh BIGCAT LIB1 LIB2 LIB3 LIB4"
+#    echo "where: <BIGCAT> is the bigcat library"
+#    echo "       <LIB1> is the first library to process"
+#    echo "       <LIB2> is the second library to process"
+#    echo "       <LIB3> is the third library to process"
+#    echo "       <LIB4> is the fourth library to process"
+#    echo "output: <BIGCAT><LIB1><LIB2><LIB3><LIB4>pastetable1m500sdm3chrlink.txt" # Have
+#    echo "        <BIGCAT><LIB1><LIB2><LIB3><LIB4>pastetable2m500sdm3chr.txt"     # header
+#    echo "This script does the job of selecting and making tables"                # rows
+#    echo "for the small RNA intervals analysis."
+#}
+#BIGCAT=$1
+#LIB1=$2
+#LIB2=$3
+#LIB3=$4
+#LIB4=$5
+
+
+###
+
+pastetablehitsmersstrand.sh   ## Time-stamp: <2013-08-07 13:55:16 liling>
+usage() {
+    echo "usage: pastetablehitsmersstrand.sh do 2>&1 | tee date.pastetablehitsstrand.txt"
+    echo " variables are set within script"
+    echo " Script must be run with do"
+    echo "This script does the job of making tables from"
+    echo "runextralibs for unique counts, 21mers, stranded counts."
+    echo "1. Count all reads mapping to intervals, no strand directionality"
+    echo "2. Count all reads mapping to intervals, with strand directionality"
+    echo "3. Count all 21mers mapping to intervals, no strand directionality"
+    echo "4. Count all 21mers mapping to intervals, with strand directionality"
+    echo "5. Count unique (single genomic hits) reads mapping to interval, no strand directionality"
+    echo "6. Count unique (single genomic hits) reads mapping to interval, with strand directionality"
+    echo "7. Count unique (single genomic hits) 21 mer reads mapping to interval, no strand directionality"
+    echo "8. Count unique (single genomic hits) 21 mer reads mapping to interval, with strand directionality"
+    echo "9. Count multiple (more than one genomic hits) reads mapping to interval, no strand directionality"
+    echo "10. Count multiple (more than one genomic hits) reads mapping to interval, with strand directionality"
+    echo "11. Count multiple (more than one genomic hits) 21 mer reads mapping to interval, no strand directionality"
+    echo "12. Count multiple (more than one genomic hits) 21 mer reads mapping to interval, with strand directionality"
+    echo "13. Format genomic hits, row number, link, neat name"
+    echo "14. Paste tables together for normRPmirpre."
+}
+# Set variables
+BIG2CAT=big2catre
+LIB1=V063V0632re
+LIB2=V064V0642re
+LIB3=V065V0652re
+LIB4=V066V0662re
+LIB5=V097re
+LIB6=V098re
+LIB7=V0882re
+LIB8=V0892re
+
+# Switch interval file
+#INTERVALFILE=big2catreintervalllhits20130801.bed
+#INTERVALFILE=big2catreintervaluniquemapper20130801.bed
+INTERVALFILE=big2catreintervalmultimapper20130801.bed
+
+SELECTLENGTH=21
+GENOMICHITS=1
+
+FEATURENORM=mirprecursor
+INDEX=dm3excludeUext
+COUNT=normReads
+MAPTYPE=mapcol${INDEX}${COUNT}.bed
+
+#IDBED=mapcoldm3excludeUextID.bed
+IDBED=${MAPTYPE}RP${FEATURENORM}deciID.bed
+
+#NORMBED=mapcoldm3excludeUextnorm.bed
+#RPMID=mapcoldm3excludeUextRPMdeciID.bed
+#NORMRPMID=mapcoldm3excludeUextnormRPMdeciID.bed
+
+#COLCOVCOUNT=mapcolcov500countssubdm3chr.txt # Has header row
+COLCOVCOUNT=${MAPTYPE}RP${FEATURENORM}deciID.bedcovcount${INTERVALFILE}.txt
+
+FBDMELBASE=FBdmelr5.52
+FBANNOT=${FBDMELBASE}.${INTERVALFILE}.txt # Has header row
+
+
+###
+
+selectrowswithchrfromfile.sh    ## Time-stamp: <2013-05-10 19:04:40 liling>
+usage() {
+    echo "usage: selectrowswithchrfromfile.sh NUMBER FILE"
+    echo "where: <NUMBER> is a chromosome arm number"
+    echo "       <FILE> is the file to select, first column must have chr<NUMBER>"
+    echo "output: selectchr<NUMBER><FILE>"
+    echo "This script does the job of selecting rows with chromosome arm from file."
+}
+NUMBER=$1
+FILE=$2
+
+####################################################################################################################################
+
+############################################################
+# reads must map fully within interval to be counted
+
+# sequential removal of dm3repeats and mirprecursor
+
+# variations on counting
+  # interval, no strand directionality
+  # count 21 mers mapping
+  # unique (single genomic hits) reads
+  # unique (single genomic hits) 21 mers
+  # count watson/crick strands separately
+
+
+# Time-stamp: <2013-11-04 14:45:49 liling>
+
+README for library statistics mapping
+
+##########
+Run scripts
+##########
+
+runlibstatmapping.sh
+
+usage() {
+    echo "usage: runlibstatmapping.sh <LIB>"
+    echo "where: <LIB> is a library name or list of library names"
+    echo "       to process."
+    echo "       Variables for <INDEX> set within script."
+    echo "This script does the job of running the libstatmapping"
+    echo "for a <LIB> with listed <INDEX> with subsequent"
+    echo "unmatched fasta files as input for the next mapping."
+}
+
+# Set variables
+INDEXBASE=dm3excludeUext
+FBDMELALLGFF=dmel-all-r5.52.gff
+FBDMELBASE=FBdmelr5.52
+FBDMELBED=FBdmelr5.52.bed
+FBEXPT1=${FBDMELBASE}.txt.exon.mRNA.merge  ## 1749 overlaps with mRNA
+FBEXPT2=${FBDMELBASE}.txt.exon.ncRNA.merge ## 492 overlaps with mRNA
+FBEXPT3=${FBDMELBASE}.txt.exon.rRNA.merge ## no overlaps
+FBEXPT4=${FBDMELBASE}.txt.exon.tRNA.merge  ## 2 overlaps with mRNA
+FBEXPT5=${FBDMELBASE}.txt.exon.snRNA.merge  ## no overlaps
+FBEXPT6=${FBDMELBASE}.txt.exon.snoRNA.merge  ## 5 overlaps with mRNA
+FBEXPT7=${FBDMELBASE}.txt.exon.pseudogene.merge  ## 16 overlaps with mRNA
+FBDMELBEDTYPE1=${FBDMELBED}.PT.exon ## this separates into mRNA, ncRNA, rRNA, pseudogene, tRNA, snoRNA, snRNA
+FBDMELBEDTYPE2=${FBDMELBED}.PT.intron ## this separates into mRNA, ncRNA, pseudogene, tRNA
+FBDMELBEDTYPE3=${FBDMELBED}.PT.threeprimeUTR
+FBDMELBEDTYPE4=${FBDMELBED}.PT.fiveprimeUTR
+FBDMELBEDTYPE5=${FBDMELBED}.PT.transposableelement
+
+ANNOTRMSK1=LTR
+ANNOTRMSK2=LINE
+ANNOTRMSK3=DNA
+ANNOTRMSK4=Satellite
+ANNOTRMSK5=Low_complexity
+ANNOTRMSK6=rRNA
+ANNOTRMSK7=RNA
+ANNOTRMSK8=RC
+ANNOTRMSK9=Simple_repeat
+ANNOTRMSK10=Other
+ANNOTRMSK11=Unknown
+ANNOTRMSK12=ARTEFACT
+
+FBANNOT3=${FBDMELBEDTYPE1}.rRNA.merge ## exon
+FBANNOT5=${FBDMELBEDTYPE1}.tRNA.merge ## exon
+FBANNOT7=${FBDMELBEDTYPE1}.snRNA.merge ## exon
+FBANNOT6=${FBDMELBEDTYPE1}.snoRNA.merge ## exon
+FBANNOT16=${FBDMELBEDTYPE5}.transposableelement.merge ## This is further annotation for transposable_elements.
+
+FBOVERLAPANNOT1=overlap${FBEXPT1}.${FBEXPT1} ## 1749 overlaps with mRNA.mRNA
+FBOVERLAPANNOT2=overlap${FBEXPT1}.${FBEXPT2} ## 492 overlaps with mRNA.ncRNA
+FBOVERLAPANNOT4=overlap${FBEXPT1}.${FBEXPT4} ## 2 overlaps with mRNA.tRNA
+FBOVERLAPANNOT6=overlap${FBEXPT1}.${FBEXPT6} ## 5 overlaps with mRNA.snoRNA
+FBOVERLAPANNOT7=overlap${FBEXPT1}.${FBEXPT7} ## 16 overlaps with mRNA.pseudogene
+FBANNOT2=${FBDMELBEDTYPE1}.ncRNA.merge ## exon
+FBANNOT4=${FBDMELBEDTYPE1}.pseudogene.merge ## exon
+
+
+## Set bowtie indexes
+
+# STEP 1 : background RNAs
+RMSKINDEX6=${INDEXBASE}${ANNOTRMSK6} #repeatmasker local run dm3excludeUextrRNA
+FBINDEX3=${INDEXBASE}${FBANNOT3} # exon rRNA
+DMERDNAINDEX=chr1dmerdna # dme ribosomal DNA, NCBI #index
+RMSKINDEX7=${INDEXBASE}${ANNOTRMSK7}   #repeatmasker local run dm3excludeUextRNA
+FBINDEX5=${INDEXBASE}${FBANNOT5} # exon tRNA
+FBINDEX7=${INDEXBASE}${FBANNOT7} # exon snRNA
+FBINDEX6=${INDEXBASE}${FBANNOT6} # exon snoRNA
+
+INDEX1=${RMSKINDEX6}
+INDEX2=${FBINDEX3}
+INDEX3=${DMERDNAINDEX}
+INDEX4=${RMSKINDEX7}
+INDEX5=${FBINDEX5}
+INDEX6=${FBINDEX7}
+INDEX7=${FBINDEX6}
+
+
+# STEP 2 : mirprecursor
+MIRPREINDEX=dmestemloopmirbasev20 #index
+
+INDEX8=${MIRPREINDEX}
+
+
+# STEP 3 : known hairpin small RNAs  ## Okamura2008nature # INDEX made
+HAIRPINRNAINDEX=knownhprna #index
+
+INDEX9=${HAIRPINRNAINDEX}
+
+
+# STEP 4 : transposons, transposable elements, repetitive regions
+RMSKINDEX1=${INDEXBASE}${ANNOTRMSK1}  #repeatmasker local run LTR
+RMSKINDEX2=${INDEXBASE}${ANNOTRMSK2}  #repeatmasker local run LINE
+RMSKINDEX3=${INDEXBASE}${ANNOTRMSK3}  #repeatmasker local run DNA
+RMSKINDEX4=${INDEXBASE}${ANNOTRMSK4}  #repeatmasker local run Satellite
+RMSKINDEX5=${INDEXBASE}${ANNOTRMSK5}  #repeatmasker local run Low_complexity
+RMSKINDEX8=${INDEXBASE}${ANNOTRMSK8}  #repeatmasker local run RC
+RMSKINDEX9=${INDEXBASE}${ANNOTRMSK9}  #repeatmasker local run Simple_repeat
+RMSKINDEX10=${INDEXBASE}${ANNOTRMSK10}  #repeatmasker local run Other
+RMSKINDEX11=${INDEXBASE}${ANNOTRMSK11}  #repeatmasker local run Unknown
+FBINDEX16=${INDEXBASE}${FBANNOT16} # transposable elements
+RMSKINDEX12=${INDEXBASE}${ANNOTRMSK12}  #repeatmasker local run ARTEFACT
+
+INDEX10=${RMSKINDEX1}
+INDEX11=${RMSKINDEX2}
+INDEX12=${RMSKINDEX3}
+INDEX13=${RMSKINDEX4}
+INDEX14=${RMSKINDEX5}
+INDEX15=${RMSKINDEX8}
+INDEX16=${RMSKINDEX9}
+INDEX17=${RMSKINDEX10}
+INDEX18=${RMSKINDEX11}
+INDEX19=${FBINDEX16}
+INDEX20=${RMSKINDEX12}
+
+
+# STEP 5 : published small RNA including endo-siRNA loci
+LOCIPUBINDEX1=${INDEXBASE}okamura2008nsmb    ## use only the 117 annotated 3' cis-NAT loci list, overlapping gene pairs, exons.
+LOCIPUBINDEX2=${INDEXBASE}czech2008nature    ## AGO2-associated small RNA 20-22nt, unique map. Note, this may have non cis-NAT loci.
+LOCIPUBINDEX3=${INDEXBASE}kawamura2008nature ## AGO2-associated small RNA. Note, this may have non cis-NAT loci.
+LOCIPUBINDEX4=${INDEXBASE}ghildiyal2008science ## siRNAs, S2, head. Take endo siRNAs list. Note, this may have non cis-NAT loci.
+
+INDEX21=${LOCIPUBINDEX1}
+INDEX22=${LOCIPUBINDEX2}
+INDEX23=${LOCIPUBINDEX3}
+INDEX24=${LOCIPUBINDEX4}
+
+# index for CR14033, removed because overlaps with the intronic region of thickveins. Known to produce large numbers of siRNAs.
+CR14033INDEX=${INDEXBASE}CR14033
+INDEX25=${CR14033INDEX}
+
+
+# STEP 6 : exons overlap mRNA and non-mRNA, CISNAT
+FBOVERLAPINDEX1=${INDEXBASE}${FBOVERLAPANNOT1} ## 1749 overlaps with mRNA.mRNA
+FBOVERLAPINDEX2=${INDEXBASE}${FBOVERLAPANNOT2} ## 492 overlaps with mRNA.ncRNA
+FBOVERLAPINDEX4=${INDEXBASE}${FBOVERLAPANNOT4} ## 2 overlaps with mRNA.tRNA
+FBOVERLAPINDEX6=${INDEXBASE}${FBOVERLAPANNOT6} ## 5 overlaps with mRNA.snoRNA
+FBOVERLAPINDEX7=${INDEXBASE}${FBOVERLAPANNOT7} ## 16 overlaps with mRNA.pseudogene
+
+INDEX26=${FBOVERLAPINDEX1}
+INDEX27=${FBOVERLAPINDEX2}
+INDEX28=${FBOVERLAPINDEX4}
+INDEX29=${FBOVERLAPINDEX6}
+INDEX30=${FBOVERLAPINDEX7}
+
+
+###### PREVIOUS for calculating numbers
+# STEP 7 : exon ncRNA, pseudogene
+#
+#FBINDEX2=${INDEXBASE}${FBANNOT2} # exon ncRNA
+#FBINDEX4=${INDEXBASE}${FBANNOT4} # exon pseudogene
+#
+#INDEX30=${FBINDEX2}
+#INDEX31=${FBINDEX4}
+######

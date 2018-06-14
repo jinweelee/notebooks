@@ -1,0 +1,13 @@
+B133.fastq.gz
+B134.fastq.gz
+B135.fastq.gz
+B136.fastq.gz
+B137.fastq.gz
+B138.fastq.gz
+B139.fastq.gz
+B140.fastq.gz
+B141.fastq.gz
+B142.fastq.gz
+B143.fastq.gz
+B144.fastq.gz
+B145.fastq.gz

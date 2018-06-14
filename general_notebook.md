@@ -222,7 +222,14 @@ Consider using both for more advanced printing in the future
 `print(feature, "parenttype=" + ft,sep=";")`  
 `"{} {}".format(feature, "p")`
 
-
+Reading in files	sys.stdout = open('DMr6.21excludeUextra.fasta','w')
+	lines = open('dmel-all-chromosome-r6.21.fasta').read().split("\n")
+	for line in lines:
+		if line.startswith('>2Cen_mapped_Scaffold_10_D1684'):
+			break
+		else:
+			print(line)
+	sys.stdout.close()
 
 # Pandas 
 

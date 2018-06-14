@@ -1,0 +1,13 @@
+B133	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B134	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B135	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B136	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B137	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B138	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B139	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B140	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B141	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B142	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B143	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B144	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01
+B145	18	30	spikeinset01	spikeinset01	0	a	normRPM	spikeinset01

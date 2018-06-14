@@ -1,0 +1,6 @@
+B133	18	30	dm6	dm6	0	a	normRPM	dm6
+B134	18	30	dm6	dm6	0	a	normRPM	dm6
+B135	18	30	dm6	dm6	0	a	normRPM	dm6
+B136	18	30	dm6	dm6	0	a	normRPM	dm6
+B137	18	30	dm6	dm6	0	a	normRPM	dm6
+B138	18	30	dm6	dm6	0	a	normRPM	dm6

@@ -111,3 +111,36 @@ Also we've found out that if you remove one file from the output, the entire rul
 Things we have yet to settle,
 
 got to get the index list sorted out. 
+
+
+
+##140618
+
+Hmnnm seems like index0 should have Uxtra excluded? 
+
+Yup seems like i might have made a minor mistake by not excluding Uxtra before creating all the indexes. oh well. 
+
+Hmnn okay, right recall, sequential mapping vs all_index mapping
+
+might want to do 1 additional rule at the end, like a libstats rule:
+
+
+
+Ahhh ok, so unmapped files are always in the fasta format, while mapped files are always in the bowtie.txt format. 
+
+
+
+what details do we want to include? 
+
+1) Mapped/ Unmapped to Uextra reference genome 
+2) Unique/ Multiple mappers    
+
+to do do list for tmr:
+
+1) rerun RM on genome -> DMr6.21excludeUextra.fasta
+2) re-configure naming in configfile
+3) re-run index generation in layout.
+4) re-run sequential mapping/ specifically mapping to index0
+
+
+Ok, we are also going to scrap the entire dictionary index idea and just position based on a list. we just ensure that the genome index is first, spikein is last. 

@@ -160,8 +160,11 @@ the purpose of this custom configS will be to:
 
 Maybe we will apply this variable passing thing when we do RPM / SPIKein normalzation later.
 
+`runlibstatmapping.sh` is the liling script 
 
-Additionally for our output file
+##RPM and spikein normalization
+RPM and spikein correspond to `mapcolfasta.sh` and `countfeaturesbysensereads.sh` 
+
 ## External Libs 
 
 Ok, so i think we are gonna split: 
