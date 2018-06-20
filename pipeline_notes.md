@@ -162,6 +162,15 @@ Maybe we will apply this variable passing thing when we do RPM / SPIKein normalz
 
 `runlibstatmapping.sh` is the liling script 
 
+##Logfiles
+Multiple vs Single mappers(read identifers): filter 1 occurence vs multiple occurence.
+Multiple vs Single mappers(counts) : filter 1 occurence vs multiple occurence. -> gather counts for each
+
+Mapped vs Unmapped (read identifiers): .drop_duplicates vs extract .startswith(">") in unmapped. 
+Mapped vs Unmapped (counts): -> gather counts for each. 
+
+
+
 ##RPM and spikein normalization
 RPM and spikein correspond to `mapcolfasta.sh` and `countfeaturesbysensereads.sh` 
 

@@ -143,4 +143,30 @@ to do do list for tmr:
 4) re-run sequential mapping/ specifically mapping to index0
 
 
-Ok, we are also going to scrap the entire dictionary index idea and just position based on a list. we just ensure that the genome index is first, spikein is last. 
+Ok, we are also going to scrap the entire dictionary index idea and just position based on a list. we just ensure that the genome index is first, spikein is last.
+
+
+
+##150618 
+Minor change to sequential mapping, set the input/output flow.
+
+Deceided to just map external libs to spikein for convienience, cant get around if/else restriction. 
+
+
+##160618
+Hmnn note to self, ask about setting up a repo with original scripts, do we just ignore the input files when we git add? 
+
+
+##170618
+Read `Library_rescue_methods` and `Index_sRNAtype.txt`, apparently both written by greg for his own r-script. 
+
+K so i think we are going to have to change `lib_list` and the internal structure of `external_dataset_dict` to a dict.
+
+changed mapping output to index numbering 
+
+
+Finally got to raw counts note several discrepencies between mine and renyis:
+
+1) His raw counts seem to have lumped index 4 and 5 together
+2) His miRNA counts are slightly higher than mine, i suspect its because he has pre-miRNA features in there
+3) Mine reflects indexes that are mapped with 0 counts. 
