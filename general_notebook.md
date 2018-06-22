@@ -231,6 +231,9 @@ Reading in files	sys.stdout = open('DMr6.21excludeUextra.fasta','w')
 			print(line)
 	sys.stdout.close()
 
+##Writing to files
+* `f= open("guru99.txt","w+")`, `+` creates file if dosent already exist and opens it for writing 
+
 # Pandas 
 
 
@@ -247,13 +250,14 @@ columns (column labels) , index (row labels)
 
 ### Creating a Dataframe 
 
-1. Passing a dictionary as input. Keys are treated as columns.
 
-`df2 = pd.DataFrame({ 'A' : 1., 'B' : pd.Timestamp('20130102'),'C' : pd.Series(1,index=list(range(4)),dtype='float32'),})` 
+`sales` =   `{'account': ['Jones LLC', 'Alpha Co', 'Blue Inc'],'Jan': [150, 200, 50],
+         'Feb': [200, 210, 90],
+         'Mar': [140, 215, 95]}`
 
-2. Specifications in the `columns` field as a list   
+`df = pd.DataFrame.from_dict(sales)`
 
-
+So in this example, columns are the keys and our row values are kept in a list. 
 
 ### Column and row manipulation
 
@@ -290,6 +294,7 @@ def f(gff):
 
 * `df.loc[df[0] == 'goodbye']`: Removes rows where entry in target column is not 'goodbye'
 * `df.loc[df[10].str.contains('LINE')]` checks for contains. seems like `Series.str.` can be quite helpful
+* `df.loc[df[0].str.startswith('>')]`
 * `df.drop_duplicates(0 /[0,1], keep = '' )`: Removes rows with duplicate entries in target column(s).
 * `out = df[[4,5,6,10,7,8]]` **note, the resultant df keeps old header labels** 
 
@@ -304,7 +309,8 @@ def f(gff):
 				for line in data:
 					print(line)
 
-
+* `len(df or series)`
+* `.astype('int')` for datatype converison and `series.sum()`
 ## pd.read_csv()
 
 * `f = pd.read_csv(test , sep = '\s+', header = None, skiprows = 2)`
