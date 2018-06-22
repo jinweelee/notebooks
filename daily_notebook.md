@@ -164,9 +164,16 @@ Also, finding clojure.
 Now that we generate each mapped/ unmapped combo, i think we can rewrite the maplog rule.
 
 
-ok, over the weekend we are goign to reconfigure architure, 2 impt points: 
+ok, over the weekend we are goign to reconfigure architure, 3 impt points: 
+
 1) higher order input, output structure 
+
 2) make it such that its `Okamura_libs`, `GSE17171`.. essentially remove the `External_dataset` folder.
+
+3) make structure more friendly for alternative runs. 
+ie, go 1 level deeper, and specify a `run_ID`, take reference from R script if needed, it is most recent structure.
+
+4) change `genome_vers` to just `genome`
 
 
 Added an index dictionary for downstream R data gathering
