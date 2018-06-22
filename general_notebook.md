@@ -309,8 +309,95 @@ def f(gff):
 
 * `f = pd.read_csv(test , sep = '\s+', header = None, skiprows = 2)`
 
-The regex is to deal with multiple variable whitespace delimiter and `skiprows` essentially just skips to row 2. 
+The regex is to deal with multiple variable whitespace delimiter and `skiprows` essentially just skips to row 2, so instead to configure paths and such properly, we use the Rstudio server @ `http://atlas.cbis.nus.edu.sg:8787` accessed through browser.
 
 
 
 # R  
+
+Ok, so what we learned is that if we open a file with our local Rstudio, when the script is run, it is run on the local system.
+
+hmnn ask about global/ local packages later 
+
+## General functionalities 
+
+
+* `iris %>% head() %>% summary()` is summary(head(iris)), where `%>%` acts a pipe 
+* `library(module)` is essentially your import
+* `newCol <- arrange(newCol, petal.width)` seems like no issue re-assigning variables back to themselve
+* `k <- c(0.5, 1)` returns `[0.5,1]`, **ALSO NOTE, R INDEXING IS 1-BASED** aka k[1]
+* `paste(*args, sep = '')` converts its arguments to character strings, and concatenates them with the sep
+* `print()` also a print function
+* `rm(var)` to remove from global environment 
+* only 2 main R data types to think about `numeric()` and `character()`
+
+##Datatypes
+
+###Lists 
+* So we learned today of this thing called **named lists**  
+`lst = list(bob=c(2, 3, 5), john=c("aa", "bb"))`  and we access the 'keys' in here via `$bob`
+* `names(list)` to get all the names, duh 
+
+
+##Rscript (Running from command line and feeding in arguements) 
+* `Rscript script.R` apparently to run r scripts from the command line and 
+* `Rscript --vanilla script.R var1 var2`
+
+
+##here 
+* `here(path_to_file,'file.txt')`, essentially a pjion that starts at a default home directory. 
+
+
+##yaml
+* `yaml.load_file("path_to_file/file.yaml")`
+* This then reads the yaml file into a **named list** structure, where each dictionary set becomes a named list, accordingly the nested dictionaries as well. 
+
+
+## Tidyverse
+
+Alright so apparently Tidyverse contains a whole host of subpackages `stringr`, `ggplot2`,
+`dplyr`.... et..
+
+
+###dplyr
+
+* `filter(iris, species == "virginica", length > 6)` Note, more than 1 filter, variables are columns 
+* `select(iris, length, width, plength)` Indexing by column name
+*  `mutate(iris, new_col = width > 0.5 * length)` Adding a new column of boolean values, note, try to see if we can add an entire series/ existing column.
+*  `arrange(newCol, width)` default ascending, alternatively `arrange(newCol, desc(width))`
+
+
+
+###readr
+
+*`read_tsv(file, col_names = TRUE / col_names = c("col1","col2"))` 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

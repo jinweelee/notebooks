@@ -144,3 +144,35 @@ to do do list for tmr:
 
 
 Ok, we are also going to scrap the entire dictionary index idea and just position based on a list. we just ensure that the genome index is first, spikein is last. 
+
+
+
+##210618
+Writing here again after about 1 week hiatus. A combination of forgetulness, laziness and lack of not getting into the habit of commiting daily.
+
+So spent the last few days reconfiguring all Snakefiles to how they actually should be written using wildcards.
+
+I think over the weekend i will reconfigure the directories in a more compact Input/Ouput structure. 
+
+Now moving on to the R phase of my life. 
+
+Also, finding clojure.
+
+
+##220618
+
+Now that we generate each mapped/ unmapped combo, i think we can rewrite the maplog rule.
+
+
+ok, over the weekend we are goign to reconfigure architure, 2 impt points: 
+1) higher order input, output structure 
+2) make it such that its `Okamura_libs`, `GSE17171`.. essentially remove the `External_dataset` folder.
+
+
+Added an index dictionary for downstream R data gathering
+
+Note, once data vizualization set up, i have several runs in mind
+1) thickveins only
+2) othersiRNA only
+3) Each type of transposon only
+ 
