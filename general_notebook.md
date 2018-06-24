@@ -118,7 +118,7 @@ External script path is always relative to the Snakefile
 
 So it seems that we have to restate the config variable in the snakefile
 
-
+**SUPER IMPT, every snakefile is initialized with an invisible `config` dictionary with no keys and values**
 ##Misc 
 * Try this way of using `input` as a variable to iterate through 
 
