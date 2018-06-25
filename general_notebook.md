@@ -359,27 +359,29 @@ hmnn ask about global/ local packages later
 * This then reads the yaml file into a **named list** structure, where each dictionary set becomes a named list, accordingly the nested dictionaries as well. 
 
 
-## Tidyverse
+## Tidyverse and Dataframes 
 
 Alright so apparently Tidyverse contains a whole host of subpackages `stringr`, `ggplot2`,
 `dplyr`.... et..
 
+###Dataframes
+* For all questions so far, refer to `Dataframe_cheatsheet`
+
+
 
 ###dplyr
 
-* `filter(iris, species == "virginica", length > 6)` Note, more than 1 filter, variables are columns 
-* `select(iris, length, width, plength)` Indexing by column name
+* `filter(iris, species == "virginica", length > 6)` Filter is for getting rows
+* `select(iris, length, width, plength)` Select is for columns and will somehow always carry over the goddamn column name 
 *  `mutate(iris, new_col = width > 0.5 * length)` Adding a new column of boolean values, note, try to see if we can add an entire series/ existing column.
 *  `arrange(newCol, width)` default ascending, alternatively `arrange(newCol, desc(width))`
 
 
+###stringr
 
 ###readr
 
 *`read_tsv(file, col_names = TRUE / col_names = c("col1","col2"))` 
-
-
-
 
 
 
