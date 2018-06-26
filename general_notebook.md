@@ -328,7 +328,8 @@ hmnn ask about global/ local packages later
 ## General functionalities 
 
 
-* `iris %>% head() %>% summary()` is summary(head(iris)), where `%>%` acts a pipe 
+* `iris %>% head() %>% summary()` is summary(head(iris)), where `%>%` acts a pipe and if we want a line break, 
+we need to end the line with `%>%`  
 * `library(module)` is essentially your import
 * `newCol <- arrange(newCol, petal.width)` seems like no issue re-assigning variables back to themselve
 * `k <- c(0.5, 1)` returns `[0.5,1]`, **ALSO NOTE, R INDEXING IS 1-BASED** aka k[1]
@@ -336,13 +337,18 @@ hmnn ask about global/ local packages later
 * `print()` also a print function
 * `rm(var)` to remove from global environment 
 * only 2 main R data types to think about `numeric()` and `character()`
+* `$` is good for general purpose indexing, but when we want to index with a predefined variable/ string, we have to use something like this `config_data[[paste(run_ID, "_index_list", sep="")]]`
+* `-` are read as `.` in R 
 
 ##Datatypes
 
 ###Lists 
 * So we learned today of this thing called **named lists**  
 `lst = list(bob=c(2, 3, 5), john=c("aa", "bb"))`  and we access the 'keys' in here via `$bob`
-* `names(list)` to get all the names, duh 
+* `names(list)` to get all the names, duh
+* `test$a = lst[test$a]` to use a named list for key matchings in order to modify all values in `test$a` but ...
+* Note how, `typeof(lst[name]) > list` but `typeof(lst$name) > etc`, so since using variables require [], we have to use `lst[name] %>% unlist()`
+* Wait a second, [[]] makes a huge ass difference when indexing from config_data
 
 
 ##Rscript (Running from command line and feeding in arguements) 
@@ -358,6 +364,8 @@ hmnn ask about global/ local packages later
 * `yaml.load_file("path_to_file/file.yaml")`
 * This then reads the yaml file into a **named list** structure, where each dictionary set becomes a named list, accordingly the nested dictionaries as well. 
 
+ 
+
 
 ## Tidyverse and Dataframes 
 
@@ -366,12 +374,28 @@ Alright so apparently Tidyverse contains a whole host of subpackages `stringr`, 
 
 ###Dataframes
 * For all questions so far, refer to `Dataframe_cheatsheet`
+* `nrow(dataset)`
 
+`norm_count_df$Mapped_index =  config_data$index_dict[as.character(norm_count_df$Mapped_index)]` 
+Apparently,  
+
+
+###rownames
+* `has_rownames(df)`
+* `remove_rownames(df)`
+* `rownames_to_column(df, var = "rowname")`
+* `rowid_to_column(df, var = "rowid")`
+* `column_to_rownames(df, var = "rowname")`
+
+
+###apply and lapply
+* K so we learned that apply() should be used on a 2-D datastructure, becaues we need to specify columns and rows.
 
 
 ###dplyr
 
-* `filter(iris, species == "virginica", length > 6)` Filter is for getting rows
+* `filter(iris, species == "virginica", length > 6)` Filter is for getting rows based on column values
+* `subset(iris,rownames(dataset) == names)`
 * `select(iris, length, width, plength)` Select is for columns and will somehow always carry over the goddamn column name 
 *  `mutate(iris, new_col = width > 0.5 * length)` Adding a new column of boolean values, note, try to see if we can add an entire series/ existing column.
 *  `arrange(newCol, width)` default ascending, alternatively `arrange(newCol, desc(width))`
@@ -384,6 +408,7 @@ Alright so apparently Tidyverse contains a whole host of subpackages `stringr`, 
 *`read_tsv(file, col_names = TRUE / col_names = c("col1","col2"))` 
 
 
+###ggplot
 
 
 
