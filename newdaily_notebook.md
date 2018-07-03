@@ -189,4 +189,20 @@ Ok, we are also going to scrap the entire dictionary index idea and just positio
 
 
 
-#wait what 
+
+
+##030718
+So we are starting a new daily notebook. Because im an idiot and i messed up my git commits. 
+
+K i think we make the DE.snakefile as general as possible? Then we do abit more processing in the R script.
+
+Yup, text processing of loci names will occur in the DE R script.
+
+Note to self, change the name of 'NewCisnat' to 'NewTransnat', maybe when we rerun everything in one shot tomorrow.
+
+nah nah, a better name "ExonicAntisense"
+
+And also check out that Watanabe paper, well shit turns out its a mouse paper
+
+and alright. tmr, we give the R script a full run through with the snakefile and if thats a good to go, we can try a few mapping RUN-IDs tmr. 
+

@@ -340,15 +340,23 @@ we need to end the line with `%>%`
 * `$` is good for general purpose indexing, but when we want to index with a predefined variable/ string, we have to use something like this `config_data[[paste(run_ID, "_index_list", sep="")]]`
 * `-` are read as `.` in R 
 
+
 ##Datatypes
 
 ###Lists 
 * So we learned today of this thing called **named lists**  
 `lst = list(bob=c(2, 3, 5), john=c("aa", "bb"))`  and we access the 'keys' in here via `$bob`
-* `names(list)` to get all the names, duh
+* `names(list/df)` to get items/ column names
 * `test$a = lst[test$a]` to use a named list for key matchings in order to modify all values in `test$a` but ...
 * Note how, `typeof(lst[name]) > list` but `typeof(lst$name) > etc`, so since using variables require [], we have to use `lst[name] %>% unlist()`
-* Wait a second, [[]] makes a huge ass difference when indexing from config_data
+* Wait a second, [[]] makes a huge ass difference when indexing from config_data, its kinda like extracting from an internal list. Example being:  
+
+`var = count_df['B133',]` #slicing a row from df, typeof() = list  
+`var['dmel-all-chromosome-r6.21']` #indexing column, **typeof() = list**  
+`var[['dmel-all-chromosome-r6.21']]`#indexing column with [[]], **typeof() = integer**
+
+* [[1]] means that R is showing the first element of a list.
+* * you can use both [] and [[]] on lists, the [] construct will return a subset of  the list (which will be a list) while [[]] will return a single element of the list (which could be a list or a vector or whatever that element may be)
 
 
 ##Rscript (Running from command line and feeding in arguements) 
@@ -374,11 +382,22 @@ Alright so apparently Tidyverse contains a whole host of subpackages `stringr`, 
 
 ###Dataframes
 * For all questions so far, refer to `Dataframe_cheatsheet`
-* `nrow(dataset)`
+* `nrow(dataset)` and also `ncols(dataset)`
+* `norm_count_df$Mapped_index =  config_data$index_dict[as.character(norm_count_df$Mapped_index)] %>% unlist()` 
+Apparently, this is how we change every value in mapped_index to its corresponding value in the dictionary/ config data .
+* Alright so apparently this works to divide every row by its spikein count
 
-`norm_count_df$Mapped_index =  config_data$index_dict[as.character(norm_count_df$Mapped_index)]` 
-Apparently,  
+`spikein <- count_df$spikeinset01`  
+`test<- count_df[,-ncol(count_df)] * 1000 / spikein`
 
+A simpler illustration of how we can apply lists to matching rows in dataframes using operators  
+
+`test <- data.frame('A'=c(1,2), 'B'=c(3,4), 'C' =c(5,6))`  
+`colC = test$C`  
+`test + colC`  
+A  B  C  
+6  8 10  
+8 10 12
 
 ###rownames
 * `has_rownames(df)`
@@ -387,34 +406,42 @@ Apparently,
 * `rowid_to_column(df, var = "rowid")`
 * `column_to_rownames(df, var = "rowname")`
 
+###summary
+calling summary on a list gives us
 
-###apply and lapply
-* K so we learned that apply() should be used on a 2-D datastructure, becaues we need to specify columns and rows.
+`> summary(spikein)`  
+  ```Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   9076   11197   15072   15902   16342   39376```
+
+###apply and lapply and sapply
+
+`test<- apply(count_df,1, function(x) x * 1000 / x[["spikeinset01"]])`
+
+* Ok kids, lapply always returns a list while `sapply` returns the **simplest** data structure, which is apparently a vector.
+* apparently today we learnt that we can apply() a vector column/row wise to a dataframe if the vector vs column/row have the same length. 
 
 
 ###dplyr
 
 * `filter(iris, species == "virginica", length > 6)` Filter is for getting rows based on column values
-* `subset(iris,rownames(dataset) == names)`
-* `select(iris, length, width, plength)` Select is for columns and will somehow always carry over the goddamn column name 
+* `select(iris, length, width, plength)` Select is for columns and will somehow always carry over the goddamn column name. Note this only works with unique column names
+* * `subset(iris,rownames(dataset) == names)` Subset can be for both row and columns, 
 *  `mutate(iris, new_col = width > 0.5 * length)` Adding a new column of boolean values, note, try to see if we can add an entire series/ existing column.
 *  `arrange(newCol, width)` default ascending, alternatively `arrange(newCol, desc(width))`
 
-
-###stringr
 
 ###readr
 
 *`read_tsv(file, col_names = TRUE / col_names = c("col1","col2"))` 
 
 
-###ggplot
+###ggplot + cowplot 
+
+base_aspect_ratio stretches out your main plot. 
 
 
 
-
-
-
+###summarise and summarise_all
 
 
 
