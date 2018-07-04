@@ -206,3 +206,109 @@ And also check out that Watanabe paper, well shit turns out its a mouse paper
 
 and alright. tmr, we give the R script a full run through with the snakefile and if thats a good to go, we can try a few mapping RUN-IDs tmr. 
 
+
+
+##040718
+
+we have to sync up with the index generation snakefile if we want to introduce new stuff
+or else, today, we can just use what we have 
+
+K i think we can try a transposon mapping run and a citation mapping run today. 
+
+RM indexes we still keep as a filter: 
+             
+SatelliteRM, Low_complexityRM, RCRM, Simple_repeatRM, OtherRM, UnknownRM, ARTEFACTRM
+
+We shall call it, `GffTE`
+
+note check extent of ovelap between 4 citation indexes
+Also extent of overlap between LTRRM, LINERM and DNARM
+
+`GffTE`: Ok so what have we learned. There is some serious significant overlap between GffTE and RMTransposon, that is quite clearly reflected in the count difference vs `Liling`. Other than that, nothing much significant changed. 
+
+`GffTEmoveRM`: ok, literally nothing changed and not much seems really to be mapped to `otherRM`
+
+`RMTE`: k so this one involves me changing some variables in the index_dict and understanding the overlap between the 3 transposonRM indexes.
+
+About 900+ features between LTR and LINE intersect, which is unsruprising considering how LINEs are a type of LTR. 
+And about 100+ and 200+ features between LINE and LTR intersect with DNA respectively. 
+
+So i suppose, the 'lazy' way would be to just go hierchically/ based on the number of features, so 
+LTR>LINE>DNARM, which is exactly what Liling did.
+
+Note, removed citation index and exon antisense from this run, because the results for those wouldve been the same anyway. 
+
+Also, changed the `index_dict` pairings. 
+
+Well so... maybe only a slight... very slight hint for DNA transposon? Maybe if we do a gene-DE, we can get something out of it? 
+
+
+
+`Citation`: So for this one, we just move all the GffTE/ RM TE features after our citation index. Here all the citation indexes are grouped together 
+
+Now what we notice is that the highest RMtransposon drops by around 100k, presumably this all goes into the citation indexes. (This is when we group all citation indexes together) 
+
+
+`CitationByType`: this one we just modify our `index_dict` to split our Citation indexes. Nope, nothing 
+
+
+`KlarsVeins`: aka, `FBgn0001316` and `FBgn0046776` respectively 
+
+k seems like klarsicht and thickveins are both under genes 
+
+Ok so i added CG17046 to the index_dict.
+
+Hmnn, ok, lets see if transposon mapping affects it at all
+
+K lets put the transposons behind first, to see if theres even anything significant to begin with
+
+Ok, so both thickveins and klars dosent amount to anything
+
+
+`OnlyTE`: well it seems like removing background didnt do anything. 	
+
+
+`Antisense`: Ok, seems like it gets even more amorphous when we try to push the exonic antisense up, by removing TE
+
+
+
+
+ok final things do do: 
+
+1) clip mentions of esi in papers
+
+2) learn about those hpRNA loci:
+  
+Ok it seems that in order of apparent significance
+CR46342 > CR18854 > CR32205 > CR32207 aka 
+esi-2/CG4068-B > CG18854/esi-1 > esi-4.1 > CG32207
+
+Ranking in terms of avg norm_counts for PD rescue:
+2k > 300 > 9~ > 7~  
+
+So how are these covered in the papers so far: 
+
+1) Czech
+Analysis of the most abundant siRNA from esi-2 in flies mutant for Dcr-2, AGO2, r2d2 or
+loqs extended our findings from cell culture (Supplementary Fig. 10). To examine the
+unexpected requirement for loqs more broadly, we sequenced small RNAs from loqs-mutant
+ovaries and observed a near complete loss of endo-siRNAs from structured loci
+
+2) GSE17171 
+we depleted all Loqs isoforms
+in S2 cells using dsRNA targeting shared 59-UTR sequences
+The re-expression of Loqs-PD restored
+levels of esi-2.1 in Loqs-depleted cells
+
+3) GSE26230
+The only thing they examine is CG4068B/esi-2
+
+
+4) Marques 
+The only thing they examine is CG4068B/esi-2
+
+
+
+Ok so good news: we at least have CR18854.
+Bad news: Its all we have. 
+

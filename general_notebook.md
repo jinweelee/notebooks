@@ -362,10 +362,12 @@ we need to end the line with `%>%`
 ##Rscript (Running from command line and feeding in arguements) 
 * `Rscript script.R` apparently to run r scripts from the command line and 
 * `Rscript --vanilla script.R var1 var2`
+* Ahh its because every R script is initialized with a `args` string vector
 
 
 ##here 
-* `here(path_to_file,'file.txt')`, essentially a pjion that starts at a default home directory. 
+* `here(path_var,'file.txt')`, essentially a pjion that **STARTS AT the directory where the script is called from NOT where the script is located** 
+* So, when running from Rstudio, the default here() path is `mnt/raid0/home/jinwee/`
 
 
 ##yaml
