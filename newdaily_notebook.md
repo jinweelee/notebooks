@@ -276,3 +276,11 @@ Ok, so both thickveins and klars dosent amount to anything
 ##050718
 
 Ok note, for Liling's original mapping, LTR+LINE group as retrotranasposon, DNARm as DNAtransposon, and GFFTE under other.
+
+
+
+##To do list for the weekend
+
+1) Learn heatmap 
+2) Discrete smallRNA-generating loci as master regulators of transposon activity in Drosophila Brennecke J, Aravin AA, Stark A, Dus M, Kellis M, et al. (2007) Well this is a piRNA paper.
+3)

@@ -282,3 +282,191 @@ Loqs depletion (2 Loci)**
 
 ###Final thoughts
 Ok crucially they did not do a isoform specific rescue on a loqs-ORF to pinpoint whether or not Loqs-PD is responsible for transposable element silencing. 
+
+
+
+##GSE37443
+
+###Background info:
+R2D2 and free phosphate
+suppress the inherent ability of Dcr-2 to process premiRNAs
+into 21 nt duplexes, restricting it to the longer dsRNA
+triggers associated with RNAi.
+
+Production of esiRNAs (hpRNAs) by Dcr-2 in cultured Drosophila S2 cells
+requires the alternative partner protein, Loqs-PD, rather than
+R2D2. **However, it is not known whether the production of exo-siRNAs,
+cis-NAT-endo-siRNAs, and mobile element-derived endosiRNAs
+also requires Loqs-PD. Moreover, an in vivo role for
+Loqs-PD in small RNA production has not been established.**
+
+Interesting stuff on the different structure/ domains of loqs-isoforms:  
+The largest Loqs protein isoform, **Loqs-PB, comprises three
+double-stranded RNA-binding domains (dsRBDs); dsRBD3 is
+required for Loqs-PB to bind to Dcr-1** (Fo¨ rstemann et al., 2005;
+Ye et al., 2007). **Loqs-PA, which also binds to Dcr-1, lacks
+a part of the third dsRBD of Loqs-PB**. Loqs-PD has a unique carboxy
+terminal sequence in place of dsRBD3 and binds to Dcr-2 rather than Dcr-1.
+
+Interesting stuff on the general theme of sRNA processing:  
+Partnerships between dicer-like proteins anddsRBD
+proteins are a general theme in RNA silencing pathways. For example, plants produce four distinct
+Dicer enzymes, each with its own specialized
+dsRBD partner
+
+
+
+###Summary of findings
+We find
+that Loqs-PA and Loqs-PB, but not
+Loqs-PD, can rescue the lethality of
+loqs null mutant flies.
+
+Loqs-PB is crucial
+for female fertility and for producing
+specific subsets of miRNAs. **Loqs-PD
+enhances the production of both endo and
+exo-siRNAs.**
+
+
+In the absence of
+Loqs-PB, Dcr-1 produces aberrant products
+from pre-miR-307a, pre-miR-87,
+and pre-miR-316.
+
+
+##Set up and background info
+
+loqsKO mutant flies are embryonic lethal (Park et al.,
+2007). Loqs-PA or Loqs-PB, but not Loqs-PD, restored embryonic
+viability, suggesting that a defect in miRNA biogenesis
+underlies the lethality observed in loqsKO embryos.
+
+Oh wow its an entirely in vivo study 
+
+
+### Normal Exo-siRNA Accumulation Requires Loqs-PD In Vivo
+
+In cultured Drosophila S2 cells, Loqs-PD is required for efficient
+esiRNA production, but does does Loqs-PD play a role in RNAi in adult flies? 
+
+**Okay interesting, the GMR-wIR transgene is an exo-siRNA reporter**
+
+The GMR-wIR transgene produces during eye development
+an inverted repeat hairpin RNA corresponding to white exon 3.
+Dcr-2 processes the wIR hairpin into siRNAs (Lee and Carthew,
+2003; Vagin et al., 2006), which in turn silence **white expression,
+causing the eye to be white or orange instead of red**. As such, **reduction in the absorbance at 480 nm of pigment extracted from the eye provides a quantitative
+measure of white silencing.**
+
+
+They found that in WT and HT-KO for dcr-2, r2d2, or
+ago2, the wIR transgene produced white eyes. In contrast, the
+eyes from wIR transgenic female flies **homozygous for dcr-2,
+r2d2, or ago2 mutations (A480 = 0.9–1.0) were similar to those
+of wild-type** (mean A480 = 1.2).
+
+AH ok, i looked at the diagram wrongly, so it turns out it all makes sense. HT show silencing levels similar to WT, while HM show almost no silencing. 
+
+Relation to Loqs? HT loqs-ORF KO no diff, but HM loqs-ORF KO shows slightly lower levels of silencing (but silencing not entirely attenuated). **Then, the rescue of PA,PB/PA+PB seems to decrease exo-siRNA processing? But adding PD to this combination restores siRNA processing**
+
+Loss of Loqs-PD decreased
+the abundance of white siRNA reads across the entire wIR
+hairpin sequence for both sense and antisense siRNAs, suggesting
+a sequence-independent role for Loqs-PD in facilitating exosiRNA
+production by Dcr-2 (
+
+
+### Oh shit Normal Exo-siRNA Accumulation Requires Loqs-PD In Vivo
+
+Cis-NAT endo-siRNA accumulation also required Loqs-PD in
+heads and ovaries (Figures 2D and S2D). Our data were more
+equivocal for transposon-derived endo-siRNAs: these
+decreased when Loqs-PB was the only isoform present, but
+were unaltered compared to loqsKO/CyO heterozygotes when
+Loqs-PA was expressed (Figure 2D). In contrast, overexpression
+of Loqs-PD increased both cis-NAT and transposon-derived endo-
+siRNAs, suggesting that Loqs-PD acts in the production of
+transposon-derived endo-siRNAs as it does for exo-siRNA,
+esiRNA, and cis-NAT endo-siRNA biogenesis.
+
+In contrast, overexpression
+of Loqs-PD increased both cis-NAT and transposon-derived endo-
+siRNAs, suggesting that Loqs-PD acts in the production of
+transposon-derived endo-siRNAs as it does for exo-siRNA,
+esiRNA, and cis-NAT endo-siRNA biogenesis.
+
+Key points / statements they make that we can challenge: 
+**suggesting that Loqs-PD acts in the production of
+transposon-derived endo-siRNAs as it does for exo-siRNA,
+esiRNA, and cis-NAT endo-siRNA bioge
+nesis.** 
+
+**Endo-siRNA Accumulation *Requires* Loqs-PD** 
+
+
+We conclude
+that Loqs-PD functions in both endo-siRNA and exo-siRNA
+production by decreasing the concentration of substrate
+required for Dcr-2 to efficiently produce siRNA.
+
+
+###Loqs-PB Tunes Where Dcr-1 Cleaves Some Pre-miRNAs
+In the **absence of Loqs-PB, miR-307a was shorter and miR-316 and
+miR-9b were longer** (Figure 3A–3D). miR-307a was also shorter
+and miR-316 was longer in loqsf00791 hypomorphic mutants.
+
+flies lacking Loqs-PB accumulate a 21 nt long miR-307a isomir whose seed sequence
+begins at position 4 of the canonical 23 nt long miR-307a isomir.
+The different lengths of these miRNAs in loqsKO;Loqs-PA/TM3
+and loqsKO;Loqs-PB/TM3 flies likely reflects a direct influence of
+Loqs-PB on the choice of cleavage site by Dcr-1.
+
+Our data suggest that Loqs-PB repositions
+pre-miR-307a on Dcr-1 so as to favor production of
+miR-307a23-mer over miR-307a21-mer
+
+Also note that in vitro: 
+We conclude that Dcr-1 and Loqs-PB
+form a 1:1 complex.
+
+
+##GSE45290
+
+
+To differentiate between Ago2-loaded and other small RNAs,
+we made use of the fact that the 3’-terminal nucleotide of Piwi-/
+Aub-/Ago3- as well as Ago2-loaded small RNAs is 2’-O-methyl
+modified [16,17]. This modification renders the small RNAs
+resistant to oxidation of vicinal diols with sodium periodate and
+subsequent b-elimination that will shorten the un-modified RNAs
+by one nucleotide and prevent them from participating in the 3’-
+end ligation reaction required for deep sequencing library
+generation. The technique is highly efficient and specific since
+the b-elimination resistant small RNAs essentially disappear in
+libraries prepared from ago2 null mutant flies filtered out.
+
+
+A striking observation was that a large proportion ofreads (0.6% to 14.5% of genome matching reads, 5.1% to 80.6%of transposons matching reads) could be attributed to only fourtransposable elements (roo,297,TNFBandblood). 
+
+Loss of Loqs-PD resulted in a 1.8-fold reduction of transposonmatching
+endo-siRNAs in libraries without b-elimination, consistent
+with the notion that its role is predominantly in siRNA
+production (Figure 1 C, left panel). While this was true for the
+analysis of all transposons in bulk, some individual exceptions to
+this rule exist. For example, the transposons F-element, 412 and Doc
+were only slightly affected by loss of Loqs-PD (Figure S8 in File
+S1). The overall reduction of transposon-targeting endo-siRNAs
+was also observed after b-elimination, in agreement with the
+notion that small RNAs must be produced before they can be
+
+We observed no overall reduction of transposon
+matching endo-siRNAs between heterozygous and homozygous
+mutants before b-elimination (Figure 1 C, left panel) with only one
+major exception: The endo-siRNAs directed against F-element were
+strongly reduced in the absence of r2d2 but only mildly affected by
+the absence of loqs-D (Figure S8 in File S1).
+
+
+
+Is there any common principle that could explain why certain transposons differ from the bulk in their requirements for Loqs-PDand R2D2? This distinction is not based on their abundance sincepreference of Loqs-PD for biogenesis or R2D2 for Ago2-loadingdoes not correlate with the absolute amount of small RNAs (Figure3). Furthermore, when transposons were classified into longterminal repeats (LTRs), long interspersed elements (LINEs) andinverted  repeats  (IRs),  we  did  not  observe  any  consistent correlation that could explain R2D2 versus Loqs-PD preference.
