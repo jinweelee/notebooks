@@ -468,5 +468,4 @@ strongly reduced in the absence of r2d2 but only mildly affected by
 the absence of loqs-D (Figure S8 in File S1).
 
 
-
 Is there any common principle that could explain why certain transposons differ from the bulk in their requirements for Loqs-PDand R2D2? This distinction is not based on their abundance sincepreference of Loqs-PD for biogenesis or R2D2 for Ago2-loadingdoes not correlate with the absolute amount of small RNAs (Figure3). Furthermore, when transposons were classified into longterminal repeats (LTRs), long interspersed elements (LINEs) andinverted  repeats  (IRs),  we  did  not  observe  any  consistent correlation that could explain R2D2 versus Loqs-PD preference.
