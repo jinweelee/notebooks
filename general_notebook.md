@@ -437,12 +437,15 @@ calling summary on a list gives us
 *`read_tsv(file, col_names = TRUE / col_names = c("col1","col2"))` 
 
 
-###ggplot + cowplot 
+###filtering rows based on condition 2 slightly different examples here
+* `test <- norm_DE_df[apply(norm_DE_df>5, 1, all) & rowSums(norm_DE_df)>500,]` 	
 
-base_aspect_ratio stretches out your main plot. 
+###filtering vector based on conditional
+* `test4 <- colnames(norm_DE_df)[grepl('Control', colnames(norm_DE_df))]`
 
 
-
+###Group_by and aggregate,
+seems like group_by is for rows,
 ###summarise and summarise_all
 
 
