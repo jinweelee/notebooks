@@ -283,4 +283,14 @@ Ok note, for Liling's original mapping, LTR+LINE group as retrotranasposon, DNAR
 
 1) Learn heatmap 
 2) Discrete smallRNA-generating loci as master regulators of transposon activity in Drosophila Brennecke J, Aravin AA, Stark A, Dus M, Kellis M, et al. (2007) Well this is a piRNA paper.
-3)
+3)'
+
+
+
+##170718
+Ok, so it seems that for GSE37443Head, after `norm_DE_df[apply(norm_DE_df>=1, 1, all) & rowSums(norm_DE_df)>100,]`, we only get 34 features, but by keeping the WT's with like 1 count, we get some really wacky fold changes.
+
+So, i think we settle on, `apply(norm_DE_df>=3, 1, all) & rowSums(norm_DE_df)>100,`, which gives 21 features
+
+
+And shit, 
