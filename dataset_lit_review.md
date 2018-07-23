@@ -58,6 +58,20 @@ Database searching revealed that a large number of the AGO2-
 associated small RNAs corresponded to transposons and other repetitive
 elements in the genome **around 60~% of reads**
 
+##External datasets
+* **Kawamura** immunopurified AGO2 with a specific
+monoclonal antibody from a cultured Drosophila somatic S2 cell line
+(Supplementary Fig. 1a, b) and examined its associated RNAs. AGO2
+in S2 cells was predominantly associated with small RNAs of about 21
+nucleotides in length.
+*  **Czech** structured loci + convergent transcripts 
+*  **ghdi** 21-nt small RNAs mapping to transposons/ overlapping transcripts. \
+*  **okamura** hairpin RNAs, detected using density of 21nt reads mapping to genomic overlap regions.
+
+Questions for kastutomo:
+
+
+
 
 ##GSE26230
 
