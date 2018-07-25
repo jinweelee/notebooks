@@ -451,7 +451,18 @@ seems like group_by is for rows,
 
 
 
+##Gviz / GenomicRanges
 
+Seems like we dont need GenomicRanges, we apparently can just use a dataframe
+
+
+Ok, it seems like the `AlignmentTrack` is gonn be the one we use, sadly it takes in BAM format? 
+
+So i think we will have to make a bt index of just the feature we want, then do mapping with uncollapsed, processed reads -> output in BAM -> then feed into Gviz.
+
+Hmnn, no, it seems like we can just do the whole ncRNA mapping -> set the view to the boundary of desired gene -> 
+
+Right, it seems that the way to make super nice plots, is to couple multiple tracks together, ie. many layers of information.
 
 
 
